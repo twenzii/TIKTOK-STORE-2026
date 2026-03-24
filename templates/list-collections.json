@@ -1,0 +1,408 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "85c86895-d3e6-4879-8c04-186884a188bb": {
+      "type": "scrolling-text",
+      "blocks": {
+        "template--18765520470307__85c86895-d3e6-4879-8c04-186884a188bb-168258868565790a02-0": {
+          "type": "scrolling-text",
+          "settings": {
+            "text": "Free Shipping for all order over $99",
+            "link": "",
+            "accent_color": false
+          }
+        },
+        "63c8c7aa-070f-4bf7-b2f2-e39befc7ae6f": {
+          "type": "scrolling-text",
+          "settings": {
+            "text": "30 days return guarantee",
+            "link": "",
+            "accent_color": false
+          }
+        },
+        "c811f06e-b5df-4bd1-95b3-30b7d3151075": {
+          "type": "scrolling-text",
+          "settings": {
+            "text": "buy now, pay later with klarna",
+            "link": "",
+            "accent_color": false
+          }
+        },
+        "268c5309-94f8-4520-a172-4acff07043e5": {
+          "type": "scrolling-text",
+          "settings": {
+            "text": "100% secure online payment",
+            "link": "",
+            "accent_color": false
+          }
+        }
+      },
+      "block_order": [
+        "template--18765520470307__85c86895-d3e6-4879-8c04-186884a188bb-168258868565790a02-0",
+        "63c8c7aa-070f-4bf7-b2f2-e39befc7ae6f",
+        "c811f06e-b5df-4bd1-95b3-30b7d3151075",
+        "268c5309-94f8-4520-a172-4acff07043e5"
+      ],
+      "settings": {
+        "section_width": "stretch_width",
+        "color_scheme": "scheme-0ba1b009-7eed-45cd-b0f5-57fda3e81ca0",
+        "direction": "left",
+        "marquee_speed": 18,
+        "style_between_item": true,
+        "scrolling_size": "small",
+        "uppercase": true,
+        "use_heading_font": false,
+        "padding_top": 24,
+        "padding_bottom": 26
+      }
+    },
+    "heading": {
+      "type": "page-heading-list-collections",
+      "blocks": {
+        "fa7fef7f-c530-4071-8eab-0699da17f645": {
+          "type": "title",
+          "settings": {
+            "page_title": "All Collections"
+          }
+        },
+        "9025c460-7dd6-4007-b4d7-b54ed3e85e88": {
+          "type": "description",
+          "settings": {
+            "page_description": "Shop our trending collections - redefine your style."
+          }
+        }
+      },
+      "block_order": [
+        "fa7fef7f-c530-4071-8eab-0699da17f645",
+        "9025c460-7dd6-4007-b4d7-b54ed3e85e88"
+      ],
+      "settings": {
+        "section_width": "stretch_width",
+        "text_alignment": "center",
+        "eb_breadcrumb": true,
+        "padding_top": 80,
+        "padding_bottom": 28
+      }
+    },
+    "6af665b2-95ad-4222-88fb-5129fb5eb7bb": {
+      "type": "promotion-banner",
+      "blocks": {
+        "template--19462698303779__6af665b2-95ad-4222-88fb-5129fb5eb7bb-image_with_text_overlay-1": {
+          "type": "image_with_text_overlay",
+          "settings": {
+            "image": "shopify://shop_images/gorder-homepage-banner-1.jpg",
+            "mobile_image": "shopify://shop_images/gorder-banner-mb_639fcdaf-2327-4bef-8548-30b8f69384a4.jpg",
+            "color_scheme": "",
+            "image_overlay_opacity": 37,
+            "show_text_bellow": false,
+            "reset_color": false,
+            "subheading": "TOP ITEMS IN AGILE",
+            "heading": "Best Seller",
+            "description": "",
+            "first_button_label": "Shop now",
+            "first_button_link": "shopify://collections",
+            "first_button_style": false,
+            "second_button_label": "",
+            "second_button_link": "",
+            "second_button_style": false,
+            "desktop_content_position": "end",
+            "text_alignment": "left",
+            "content_size": "medium",
+            "vertical": "center",
+            "content_width": "50%"
+          }
+        },
+        "template--19462698303779__6af665b2-95ad-4222-88fb-5129fb5eb7bb-image_with_text_overlay-2": {
+          "type": "image_with_text_overlay",
+          "settings": {
+            "image": "shopify://shop_images/gorder-homepage-banner-2.jpg",
+            "mobile_image": "shopify://shop_images/gorde-banner1-mb.jpg",
+            "color_scheme": "",
+            "image_overlay_opacity": 37,
+            "show_text_bellow": false,
+            "reset_color": false,
+            "subheading": "NEW ITEMS AND MORE",
+            "heading": "Just Landing",
+            "description": "",
+            "first_button_label": "Shop now",
+            "first_button_link": "shopify://collections/accessories",
+            "first_button_style": false,
+            "second_button_label": "",
+            "second_button_link": "",
+            "second_button_style": false,
+            "desktop_content_position": "end",
+            "text_alignment": "left",
+            "content_size": "medium",
+            "vertical": "center",
+            "content_width": "50%"
+          }
+        }
+      },
+      "block_order": [
+        "template--19462698303779__6af665b2-95ad-4222-88fb-5129fb5eb7bb-image_with_text_overlay-1",
+        "template--19462698303779__6af665b2-95ad-4222-88fb-5129fb5eb7bb-image_with_text_overlay-2"
+      ],
+      "settings": {
+        "section_width": "stretch_width",
+        "column_gap": "small",
+        "padding_top": 40,
+        "padding_bottom": 30
+      }
+    },
+    "c068bb5f-2747-4eba-9a22-a3a56b509577": {
+      "type": "rich-text",
+      "blocks": {
+        "template--20380570812730__c068bb5f-2747-4eba-9a22-a3a56b509577-heading-1": {
+          "type": "heading",
+          "settings": {
+            "heading": "Shop by Categories",
+            "heading_size": "h2",
+            "remove_space": true,
+            "remove_letter_spacing": false
+          }
+        },
+        "template--20380570812730__c068bb5f-2747-4eba-9a22-a3a56b509577-text-1": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Select any category that match your style.</p>",
+            "description_size": "",
+            "remove_space": false
+          }
+        }
+      },
+      "block_order": [
+        "template--20380570812730__c068bb5f-2747-4eba-9a22-a3a56b509577-heading-1",
+        "template--20380570812730__c068bb5f-2747-4eba-9a22-a3a56b509577-text-1"
+      ],
+      "settings": {
+        "section_width": "stretch_width",
+        "color_scheme": "",
+        "text_alignment": "center",
+        "content_max_width": 100,
+        "padding_top": 40,
+        "padding_bottom": 35
+      }
+    },
+    "main": {
+      "type": "main-list-collections",
+      "blocks": {
+        "db30fceb-2131-471f-8416-61e7fd319015": {
+          "type": "collection",
+          "settings": {
+            "collection": "minis"
+          }
+        },
+        "c57c9dba-5d34-4bd9-b8bb-2235f16330d9": {
+          "type": "collection",
+          "settings": {
+            "collection": "maxi"
+          }
+        },
+        "37a4c61e-8296-4d54-bafa-cfe731a8fc5c": {
+          "type": "collection",
+          "settings": {
+            "collection": "midis",
+            "collection_image": "shopify://shop_images/midis.png"
+          }
+        },
+        "a2598cd1-9181-4f37-ae29-96eae585da9a": {
+          "type": "collection",
+          "settings": {
+            "collection": "knitwear"
+          }
+        },
+        "9a2d5a4e-ac1b-44d0-9630-e58acfc85905": {
+          "type": "collection",
+          "settings": {
+            "collection": "knee-lneght"
+          }
+        },
+        "5d0a423f-0543-497f-aa5b-96edeba3d695": {
+          "type": "collection",
+          "settings": {
+            "collection": "smock"
+          }
+        },
+        "9b338b3e-a020-4631-b969-c261479406e3": {
+          "type": "collection",
+          "settings": {
+            "collection": "jumpsuit"
+          }
+        },
+        "9f6f780c-1d5f-43e7-a01a-af34b6f1b627": {
+          "type": "collection",
+          "settings": {
+            "collection": "demin-zip"
+          }
+        },
+        "cf71c6bd-10f9-45dc-9d17-80ac660923da": {
+          "type": "collection",
+          "settings": {
+            "collection": "shirt-dress"
+          }
+        },
+        "0102b70f-4b4c-4804-a4a0-e5c7307ec651": {
+          "type": "collection",
+          "settings": {
+            "collection": "accessories"
+          }
+        }
+      },
+      "block_order": [
+        "db30fceb-2131-471f-8416-61e7fd319015",
+        "c57c9dba-5d34-4bd9-b8bb-2235f16330d9",
+        "37a4c61e-8296-4d54-bafa-cfe731a8fc5c",
+        "a2598cd1-9181-4f37-ae29-96eae585da9a",
+        "9a2d5a4e-ac1b-44d0-9630-e58acfc85905",
+        "5d0a423f-0543-497f-aa5b-96edeba3d695",
+        "9b338b3e-a020-4631-b969-c261479406e3",
+        "9f6f780c-1d5f-43e7-a01a-af34b6f1b627",
+        "cf71c6bd-10f9-45dc-9d17-80ac660923da",
+        "0102b70f-4b4c-4804-a4a0-e5c7307ec651"
+      ],
+      "settings": {
+        "section_width": "stretch_width",
+        "color_scheme": "color-scheme-1",
+        "title": "",
+        "description": "",
+        "text_alignment": "center",
+        "collection_to_show": "selected",
+        "sort": "products_high",
+        "image_ratio": "adapt",
+        "text_info_alignment": "left",
+        "information_position": "overlay",
+        "show_product_count": true,
+        "limit_collections": 20,
+        "columns_desktop": 5,
+        "column_gap": "small",
+        "padding_top": 0,
+        "padding_bottom": 36
+      }
+    },
+    "9260e7b2-39d7-4da0-97a4-1d1e5876677f": {
+      "type": "rich-text",
+      "blocks": {
+        "template--20283511505210__9260e7b2-39d7-4da0-97a4-1d1e5876677f-heading-1": {
+          "type": "heading",
+          "settings": {
+            "heading": "Shop by Occasion",
+            "heading_size": "h2",
+            "remove_space": true,
+            "remove_letter_spacing": false
+          }
+        },
+        "112eaf22-cc3a-4739-9912-dd8446a31f5a": {
+          "type": "spacing",
+          "settings": {
+            "desktop_spacing": 15,
+            "mobile_spacing": 10
+          }
+        },
+        "template--20283511505210__9260e7b2-39d7-4da0-97a4-1d1e5876677f-text-1": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Seeking the perfect dress for any occasion? Explore our curated collection below.</p>",
+            "description_size": "",
+            "remove_space": false
+          }
+        }
+      },
+      "block_order": [
+        "template--20283511505210__9260e7b2-39d7-4da0-97a4-1d1e5876677f-heading-1",
+        "112eaf22-cc3a-4739-9912-dd8446a31f5a",
+        "template--20283511505210__9260e7b2-39d7-4da0-97a4-1d1e5876677f-text-1"
+      ],
+      "settings": {
+        "section_width": "stretch_width",
+        "color_scheme": "",
+        "text_alignment": "center",
+        "content_max_width": 100,
+        "padding_top": 40,
+        "padding_bottom": 35
+      }
+    },
+    "924f48f3-866d-4cb4-b071-c60376f5f6cf": {
+      "type": "collection-list",
+      "blocks": {
+        "template--18765520863523__924f48f3-866d-4cb4-b071-c60376f5f6cf-1684721817ff43acc0-0": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "summer",
+            "collection_title": ""
+          }
+        },
+        "template--18765520863523__924f48f3-866d-4cb4-b071-c60376f5f6cf-1684721817ff43acc0-1": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "night-out",
+            "collection_title": ""
+          }
+        },
+        "template--18765520863523__924f48f3-866d-4cb4-b071-c60376f5f6cf-1684721817ff43acc0-2": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "party",
+            "collection_title": ""
+          }
+        },
+        "31b857a4-533c-4b5d-a8ea-50e9aa77fff2": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "work",
+            "collection_title": ""
+          }
+        },
+        "d48b9d06-1b66-42be-b09b-189dea4c809c": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "cooktail",
+            "collection_title": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--18765520863523__924f48f3-866d-4cb4-b071-c60376f5f6cf-1684721817ff43acc0-0",
+        "template--18765520863523__924f48f3-866d-4cb4-b071-c60376f5f6cf-1684721817ff43acc0-1",
+        "template--18765520863523__924f48f3-866d-4cb4-b071-c60376f5f6cf-1684721817ff43acc0-2",
+        "31b857a4-533c-4b5d-a8ea-50e9aa77fff2",
+        "d48b9d06-1b66-42be-b09b-189dea4c809c"
+      ],
+      "settings": {
+        "section_width": "stretch_width",
+        "color_scheme": "color-scheme-1",
+        "title": "",
+        "description": "",
+        "text_alignment": "center",
+        "show_view_all": false,
+        "image_ratio": "adapt",
+        "information_position": "overlay",
+        "show_product_count": true,
+        "text_information_alignment": "left",
+        "columns_desktop": 5,
+        "column_gap": "small",
+        "enable_carousel": true,
+        "show_navigation": true,
+        "show_pagination": false,
+        "padding_top": 0,
+        "padding_bottom": 15
+      }
+    }
+  },
+  "order": [
+    "85c86895-d3e6-4879-8c04-186884a188bb",
+    "heading",
+    "6af665b2-95ad-4222-88fb-5129fb5eb7bb",
+    "c068bb5f-2747-4eba-9a22-a3a56b509577",
+    "main",
+    "9260e7b2-39d7-4da0-97a4-1d1e5876677f",
+    "924f48f3-866d-4cb4-b071-c60376f5f6cf"
+  ]
+}
