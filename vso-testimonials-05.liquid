@@ -1,0 +1,2508 @@
+{% comment %}
+WARNING: UNAUTHORIZED MODIFICATION PROHIBITED
+This code is proprietary property of Versio Studio. Any unauthorized tampering, 
+alteration, or distribution of this file is strictly forbidden and will be prosecuted to the maximum extent permitted by law.
+All modifications are logged.
+
+If you require assistance or have questions regarding this code, please contact support@versio.studio.
+{% endcomment %}
+
+{%- liquid
+  assign mobile_gap = section.settings.mobile_gap
+  assign padding_horizontal = section.settings.padding_horizontal
+  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile
+  assign section_full_width = section.settings.section_full_width
+  assign section_max_width = section.settings.section_max_width
+  assign text_container_max_width = section.settings.text_container_max_width
+  assign content_testimonial_gap = section.settings.content_testimonial_gap
+-%}
+
+{%- style -%}
+  {% if section.settings.custom_title_font %}
+    {{ section.settings.title_font | font_face: font_display: 'swap' }}
+  {% endif %}
+  {% if section.settings.custom_subtitle_font %}
+    {{ section.settings.subtitle_font | font_face: font_display: 'swap' }}
+  {% endif %}
+  {% if section.settings.custom_description_font %}
+    {{ section.settings.description_font | font_face: font_display: 'swap' }}
+  {% endif %}
+  {% if section.settings.custom_testimonial_title_font %}
+    {{ section.settings.testimonial_title_font | font_face: font_display: 'swap' }}
+  {% endif %}
+  {% if section.settings.custom_testimonial_content_font %}
+    {{ section.settings.testimonial_content_font | font_face: font_display: 'swap' }}
+  {% endif %}
+  {% if section.settings.custom_author_name_font %}
+    {{ section.settings.author_name_font | font_face: font_display: 'swap' }}
+  {% endif %}
+  {% if section.settings.custom_author_location_font %}
+    {{ section.settings.author_location_font | font_face: font_display: 'swap' }}
+  {% endif %}
+  {% if section.settings.custom_author_date_font %}
+    {{ section.settings.author_date_font | font_face: font_display: 'swap' }}
+  {% endif %}
+
+  {% if section.settings.custom_title_font %}
+    #testimonials-05-{{ section.id }} .vso-testimonials-05__title {
+      font-family: {{ section.settings.title_font.family }}, {{ section.settings.title_font.fallback_families }};
+      font-style: {{ section.settings.title_font.style }};
+    }
+  {% endif %}
+
+  {% if section.settings.custom_subtitle_font %}
+    #testimonials-05-{{ section.id }} .vso-testimonials-05__subtitle {
+      font-family: {{ section.settings.subtitle_font.family }}, {{ section.settings.subtitle_font.fallback_families }};
+      font-style: {{ section.settings.subtitle_font.style }};
+    }
+  {% endif %}
+
+  {% if section.settings.custom_description_font %}
+    #testimonials-05-{{ section.id }} .vso-testimonials-05__description {
+      font-family: {{ section.settings.description_font.family }}, {{ section.settings.description_font.fallback_families }};
+      font-style: {{ section.settings.description_font.style }};
+    }
+  {% endif %}
+
+  {% if section.settings.custom_testimonial_title_font %}
+    #testimonials-05-{{ section.id }} .vso-testimonials-05__testimonial-title {
+      font-family: {{ section.settings.testimonial_title_font.family }}, {{ section.settings.testimonial_title_font.fallback_families }};
+      font-style: {{ section.settings.testimonial_title_font.style }};
+    }
+  {% endif %}
+
+  {% if section.settings.custom_testimonial_content_font %}
+    #testimonials-05-{{ section.id }} .vso-testimonials-05__testimonial-content {
+      font-family: {{ section.settings.testimonial_content_font.family }}, {{ section.settings.testimonial_content_font.fallback_families }};
+      font-style: {{ section.settings.testimonial_content_font.style }};
+    }
+  {% endif %}
+
+  {% if section.settings.custom_author_name_font %}
+    #testimonials-05-{{ section.id }} .vso-testimonials-05__author-name {
+      font-family: {{ section.settings.author_name_font.family }}, {{ section.settings.author_name_font.fallback_families }};
+      font-style: {{ section.settings.author_name_font.style }};
+    }
+  {% endif %}
+
+  {% if section.settings.custom_author_location_font %}
+    #testimonials-05-{{ section.id }} .vso-testimonials-05__author-location {
+      font-family: {{ section.settings.author_location_font.family }}, {{ section.settings.author_location_font.fallback_families }};
+      font-style: {{ section.settings.author_location_font.style }};
+    }
+  {% endif %}
+
+  {% if section.settings.custom_author_date_font %}
+    #testimonials-05-{{ section.id }} .vso-testimonials-05__author-date {
+      font-family: {{ section.settings.author_date_font.family }}, {{ section.settings.author_date_font.fallback_families }};
+      font-style: {{ section.settings.author_date_font.style }};
+    }
+  {% endif %}
+
+  .vso-testimonials-05 {
+    padding: 0;
+    {% unless section_full_width %}
+      max-width: {{ section_max_width }}px;
+      margin: 0 auto;
+    {% endunless %}
+    overflow: visible !important;
+  }
+
+  .vso-testimonials-05__container {
+    display: flex;
+    align-items: center;
+    gap: {{ content_testimonial_gap }}px;
+    padding: 0 {{ padding_horizontal_mobile }}px;
+    overflow: visible !important;
+  }
+
+  .vso-testimonials-05__content {
+    flex: 1;
+    max-width: {{ text_container_max_width }}px;
+    text-align: {{ section.settings.content_alignment_desktop }};
+  }
+
+  .vso-node { display: none; }
+  .vso-node--v2 { display: block; }
+
+  {% if section.settings.custom_subtitle_font %}
+    .vso-testimonials-05__subtitle {
+      font-size: {{ section.settings.subtitle_size_desktop }}px;
+      color: {{ section.settings.subtitle_color }};
+      font-weight: {{ section.settings.subtitle_font_weight }};
+      line-height: {{ section.settings.subtitle_line_height }}%;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      background-color: {{ section.settings.subtitle_bg_color }};
+      padding: {{ section.settings.subtitle_padding_vertical }}px {{ section.settings.subtitle_padding_horizontal }}px;
+      border-radius: {{ section.settings.subtitle_border_radius }}px;
+      display: inline-flex;
+      align-items: center;
+      gap: {{ section.settings.subtitle_dot_spacing }}px;
+    }
+
+    .vso-testimonials-05__subtitle-dot {
+      width: {{ section.settings.subtitle_dot_size }}px;
+      height: {{ section.settings.subtitle_dot_size }}px;
+      background-color: {{ section.settings.subtitle_dot_color }};
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: inline-block;
+      {% if section.settings.enable_subtitle_dot_pulse %}
+        -webkit-animation: vso-pulse-{{ section.id }} 2s infinite;
+        animation: vso-pulse-{{ section.id }} 2s infinite;
+      {% endif %}
+    }
+
+    {% if section.settings.enable_subtitle_dot_pulse %}
+      @-webkit-keyframes vso-pulse-{{ section.id }} {
+        0% {
+          opacity: 1;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 0.4;
+          transform: scale(1.5);
+        }
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+      @keyframes vso-pulse-{{ section.id }} {
+        0% {
+          opacity: 1;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 0.4;
+          transform: scale(1.5);
+        }
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+    {% endif %}
+  {% endif %}
+
+  .vso-testimonials-05__subtitle {
+    margin: 0 0 {{ section.settings.subtitle_margin_bottom }}px 0;
+  }
+
+  .vso-testimonials-05__title {
+    margin: 0 0 {{ section.settings.title_margin_bottom }}px 0;
+  }
+
+  .vso-testimonials-05__description {
+    margin: 0 0 {{ section.settings.description_margin_bottom }}px 0;
+  }
+
+  {% if section.settings.custom_title_font %}
+    .vso-testimonials-05__title {
+      font-size: {{ section.settings.title_size_desktop }}px;
+      color: {{ section.settings.title_color }};
+      font-weight: {{ section.settings.title_font_weight }};
+      line-height: {{ section.settings.title_line_height }}%;
+    }
+  {% endif %}
+
+  {% if section.settings.custom_description_font %}
+    .vso-testimonials-05__description {
+      font-size: {{ section.settings.description_size_desktop }}px;
+      color: {{ section.settings.description_color }};
+      font-weight: {{ section.settings.description_font_weight }};
+      line-height: {{ section.settings.description_line_height }}%;
+    }
+  {% endif %}
+
+  .vso-testimonials-05__stats {
+    display: flex;
+    justify-content: {{ section.settings.stats_alignment_desktop }};
+    gap: {{ section.settings.stats_gap }}px;
+    margin-top: {{ section.settings.stats_margin_top }}px;
+  }
+
+  .vso-testimonials-05__stat {
+    text-align: {{ section.settings.stat_numbers_alignment_desktop }};
+    position: relative;
+  }
+
+  .vso-testimonials-05__stat:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: calc(-{{ section.settings.stats_gap }}px / 2);
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 40px;
+    background-color: {{ section.settings.stat_divider_color }};
+  }
+
+  .vso-testimonials-05__stat-number {
+    margin: 0 0 4px 0;
+    font-size: {{ section.settings.stat_number_size_desktop }}px;
+    color: {{ section.settings.stat_number_color }};
+    font-weight: {{ section.settings.stat_number_font_weight }};
+    line-height: 1.2;
+  }
+
+  .vso-testimonials-05__stat-label {
+    margin: 0;
+    font-size: {{ section.settings.stat_label_size_desktop }}px;
+    color: {{ section.settings.stat_label_color }};
+    font-weight: {{ section.settings.stat_label_font_weight }};
+    line-height: 1.3;
+  }
+
+  .vso-testimonials-05__testimonial {
+    background-color: {{ section.settings.testimonial_bg_color }};
+    border-radius: {{ section.settings.testimonial_border_radius }}px;
+    padding: {{ section.settings.testimonial_padding }}px;
+    {% if section.settings.enable_testimonial_shadow %}
+      box-shadow: {{ section.settings.testimonial_shadow_color | color_modify: 'alpha', 0.15 }} 0px 4px 12px;
+    {% endif %}
+    border: {{ section.settings.testimonial_border_width }}px solid {{ section.settings.testimonial_border_color }};
+    position: relative;
+  }
+
+  .vso-testimonials-05__stars {
+    display: flex;
+    gap: 2px;
+    margin-bottom: {{ section.settings.stars_margin_bottom }}px;
+  }
+
+  .vso-testimonials-05__star {
+    width: {{ section.settings.star_size_desktop }}px;
+    height: {{ section.settings.star_size_desktop }}px;
+    color: {{ section.settings.star_color }};
+  }
+
+  .vso-testimonials-05__testimonial-title {
+    margin: 0 0 {{ section.settings.testimonial_title_margin_bottom }}px 0;
+  }
+
+  .vso-testimonials-05__testimonial-content {
+    margin: 0 0 {{ section.settings.testimonial_content_margin_bottom }}px 0;
+  }
+
+  {% if section.settings.custom_testimonial_title_font %}
+    .vso-testimonials-05__testimonial-title {
+      font-size: {{ section.settings.testimonial_title_size_desktop }}px;
+      color: {{ section.settings.testimonial_title_color }};
+      font-weight: {{ section.settings.testimonial_title_font_weight }};
+      line-height: {{ section.settings.testimonial_title_line_height }}%;
+    }
+  {% endif %}
+
+  {% if section.settings.custom_testimonial_content_font %}
+    .vso-testimonials-05__testimonial-content {
+      font-size: {{ section.settings.testimonial_content_size_desktop }}px;
+      color: {{ section.settings.testimonial_content_color }};
+      font-weight: {{ section.settings.testimonial_content_font_weight }};
+      line-height: {{ section.settings.testimonial_content_line_height }}%;
+    }
+  {% endif %}
+
+  .vso-testimonials-05__author-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 16px;
+  }
+
+  .vso-testimonials-05__author {
+    display: flex;
+    align-items: center;
+    gap: {{ section.settings.author_gap }}px;
+  }
+
+  .vso-testimonials-05__author-avatar {
+    width: {{ section.settings.avatar_size_desktop }}px;
+    height: {{ section.settings.avatar_size_desktop }}px;
+    border-radius: 50%;
+    background-color: {{ section.settings.avatar_bg_color }};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: {{ section.settings.avatar_text_size_desktop }}px;
+    font-weight: 600;
+    color: {{ section.settings.avatar_text_color }};
+    flex-shrink: 0;
+  }
+
+  .vso-testimonials-05__author-info {
+    flex: 1;
+  }
+
+  .vso-testimonials-05__author-name {
+    margin: 0 0 2px 0;
+    line-height: 1.2;
+  }
+
+  .vso-testimonials-05__author-location {
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  {% if section.settings.custom_author_name_font %}
+    .vso-testimonials-05__author-name {
+      font-size: {{ section.settings.author_name_size_desktop }}px;
+      color: {{ section.settings.author_name_color }};
+      font-weight: {{ section.settings.author_name_font_weight }};
+    }
+  {% endif %}
+
+  {% if section.settings.custom_author_location_font %}
+    .vso-testimonials-05__author-location {
+      font-size: {{ section.settings.author_location_size_desktop }}px;
+      color: {{ section.settings.author_location_color }};
+      font-weight: {{ section.settings.author_location_font_weight }};
+    }
+  {% endif %}
+
+  .vso-testimonials-05__author-date {
+    position: absolute;
+    top: {{ section.settings.testimonial_padding }}px;
+    right: {{ section.settings.testimonial_padding }}px;
+    {% if section.settings.custom_author_date_font %}
+      font-size: {{ section.settings.author_date_size_desktop }}px;
+      color: {{ section.settings.author_date_color }};
+      font-weight: {{ section.settings.author_date_font_weight }};
+    {% endif %}
+    line-height: 1.2;
+    background-color: {{ section.settings.date_bg_color }};
+    padding: {{ section.settings.date_padding_vertical }}px {{ section.settings.date_padding_horizontal }}px;
+    border-radius: {{ section.settings.date_border_radius }}px;
+    {% if section.settings.enable_date_shadow %}
+      box-shadow: {{ section.settings.date_shadow_color | color_modify: 'alpha', 0.1 }} 0px 2px 4px;
+    {% endif %}
+  }
+
+  .vso-testimonials-05__custom-pagination {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+  }
+
+  .vso-testimonials-05__pagination-bullet {
+    width: 10px;
+    height: 10px;
+    background-color: {{ section.settings.pagination_bullet_color }};
+    border-radius: 50%;
+    cursor: pointer;
+    opacity: 0.3;
+    transition: all 0.3s ease;
+  }
+
+  .vso-testimonials-05__pagination-bullet.active {
+    background-color: {{ section.settings.pagination_bullet_active_color }};
+    opacity: 1;
+  }
+
+  .vso-testimonials-05__swiper .swiper-wrapper {
+    overflow: visible !important;
+  }
+
+  .vso-testimonials-05__swiper .swiper-slide {
+    overflow: visible !important;
+  }
+
+  .vso-testimonials-05__testimonials {
+    flex: 1;
+    max-width: 50%;
+    position: relative;
+    overflow: visible !important;
+  }
+
+  .vso-testimonials-05__swiper {
+    width: 100%;
+    overflow: visible !important;
+    padding: 20px;
+    margin: -20px;
+  }
+
+  .vso-testimonials-05__navigation-arrows {
+    display: flex;
+    gap: {{ section.settings.nav_arrow_spacing }}px;
+  }
+
+  .vso-testimonials-05__nav-prev,
+  .vso-testimonials-05__nav-next {
+    width: {{ section.settings.nav_arrow_size }}px;
+    height: {{ section.settings.nav_arrow_size }}px;
+    background-color: {{ section.settings.nav_arrow_bg_color }};
+    border: {{ section.settings.nav_arrow_border_width }}px solid {{ section.settings.nav_arrow_border_color }};
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .vso-testimonials-05__nav-prev svg,
+  .vso-testimonials-05__nav-next svg {
+    width: {{ section.settings.nav_arrow_size | times: 0.4 | round: 0 }}px;
+    height: {{ section.settings.nav_arrow_size | times: 0.4 | round: 0 }}px;
+    color: {{ section.settings.nav_arrow_icon_color }};
+  }
+
+  .vso-testimonials-05__nav-prev.swiper-button-disabled,
+  .vso-testimonials-05__nav-next.swiper-button-disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  @media screen and (min-width: 750px) {
+    .vso-testimonials-05__container {
+      padding: 0 {{ padding_horizontal }}px;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .vso-testimonials-05__container {
+      flex-direction: column;
+      gap: {{ mobile_gap }}px;
+    }
+
+    .vso-testimonials-05__content {
+      max-width: 100%;
+      text-align: {{ section.settings.content_alignment_mobile }};
+    }
+
+    .vso-testimonials-05__testimonials {
+      max-width: 100%;
+      overflow: visible !important;
+    }
+
+    {% if section.settings.custom_subtitle_font %}
+      .vso-testimonials-05__subtitle {
+        font-size: {{ section.settings.subtitle_size_mobile }}px;
+      }
+    {% endif %}
+
+    {% if section.settings.custom_title_font %}
+      .vso-testimonials-05__title {
+        font-size: {{ section.settings.title_size_mobile }}px;
+      }
+    {% endif %}
+
+    {% if section.settings.custom_description_font %}
+      .vso-testimonials-05__description {
+        font-size: {{ section.settings.description_size_mobile }}px;
+      }
+    {% endif %}
+
+    .vso-testimonials-05__stats {
+      justify-content: {{ section.settings.stats_alignment_mobile }};
+      flex-wrap: wrap;
+    }
+
+    .vso-testimonials-05__pagination {
+      justify-content: center;
+    }
+
+    .vso-testimonials-05__stat {
+      text-align: {{ section.settings.stat_numbers_alignment_mobile }};
+    }
+
+    .vso-testimonials-05__stat-number {
+      font-size: {{ section.settings.stat_number_size_mobile }}px;
+    }
+
+    .vso-testimonials-05__stat-label {
+      font-size: {{ section.settings.stat_label_size_mobile }}px;
+    }
+
+    .vso-testimonials-05__star {
+      width: {{ section.settings.star_size_mobile }}px;
+      height: {{ section.settings.star_size_mobile }}px;
+    }
+
+    {% if section.settings.custom_testimonial_title_font %}
+      .vso-testimonials-05__testimonial-title {
+        font-size: {{ section.settings.testimonial_title_size_mobile }}px;
+      }
+    {% endif %}
+
+    {% if section.settings.custom_testimonial_content_font %}
+      .vso-testimonials-05__testimonial-content {
+        font-size: {{ section.settings.testimonial_content_size_mobile }}px;
+      }
+    {% endif %}
+
+    .vso-testimonials-05__author-avatar {
+      width: {{ section.settings.avatar_size_mobile }}px;
+      height: {{ section.settings.avatar_size_mobile }}px;
+      font-size: {{ section.settings.avatar_text_size_mobile }}px;
+    }
+
+    {% if section.settings.custom_author_name_font %}
+      .vso-testimonials-05__author-name {
+        font-size: {{ section.settings.author_name_size_mobile }}px;
+      }
+    {% endif %}
+
+    {% if section.settings.custom_author_location_font %}
+      .vso-testimonials-05__author-location {
+        font-size: {{ section.settings.author_location_size_mobile }}px;
+      }
+    {% endif %}
+
+    {% if section.settings.custom_author_date_font %}
+      .vso-testimonials-05__author-date {
+        font-size: {{ section.settings.author_date_size_mobile }}px;
+      }
+    {% endif %}
+  }
+
+  .section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_desktop }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+    margin-top: {{ section.settings.margin_top_desktop }}px;
+    margin-bottom: {{ section.settings.margin_bottom_desktop }}px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+      margin-top: {{ section.settings.margin_top_mobile }}px;
+      margin-bottom: {{ section.settings.margin_bottom_mobile }}px;
+    }
+  }
+{%- endstyle -%}
+
+{% if section_full_width %}
+  <style>
+    #shopify-section-{{ section.id }}.section-full-width-enabled {
+      width: 100vw !important;
+      max-width: 100vw !important;
+      margin-left: calc(50% - 50vw) !important;
+      margin-right: calc(50% - 50vw) !important;
+      left: 0 !important;
+      right: 0 !important;
+    }
+    
+    #shopify-section-{{ section.id }}.section-full-width-enabled .vso-testimonials-05 {
+      max-width: none !important;
+      margin: 0 !important;
+    }
+  </style>
+{% endif %}
+
+<style>
+  #shopify-section-{{ section.id }} {
+    {% if section.settings.background_style == 'gradient' %}
+      background: linear-gradient(to bottom, {{ section.settings.gradient_start_color }}, {{ section.settings.gradient_end_color }});
+    {% else %}
+      background-color: {{ section.settings.background_color }};
+    {% endif %}
+    width: 100%;
+  }
+</style>
+
+<div class="section-{{ section.id }} vso-node">
+  <div class="vso-testimonials-05" id="testimonials-05-{{ section.id }}">
+    <div class="vso-testimonials-05__container">
+      <div class="vso-testimonials-05__content">
+        {% if section.settings.subtitle != blank %}
+          {% if section.settings.custom_subtitle_font %}
+            <div class="vso-testimonials-05__subtitle">
+              {% if section.settings.show_subtitle_dot %}
+                <span class="vso-testimonials-05__subtitle-dot"></span>
+              {% endif %}
+              {{ section.settings.subtitle }}
+            </div>
+          {% else %}
+            {%- assign subtitle_tag = section.settings.subtitle_as | default: 'p' -%}
+            <{{ subtitle_tag }} class="vso-testimonials-05__subtitle">
+              {{ section.settings.subtitle }}
+            </{{ subtitle_tag }}>
+          {% endif %}
+        {% endif %}
+
+        {% if section.settings.title != blank %}
+          {% if section.settings.custom_title_font %}
+            <div class="vso-testimonials-05__title">
+              {{ section.settings.title }}
+            </div>
+          {% else %}
+            {%- assign title_tag = section.settings.title_as | default: 'h2' -%}
+            <{{ title_tag }} class="vso-testimonials-05__title">
+              {{ section.settings.title }}
+            </{{ title_tag }}>
+          {% endif %}
+        {% endif %}
+
+        {% if section.settings.description != blank %}
+          {% if section.settings.custom_description_font %}
+            <div class="vso-testimonials-05__description">
+              {{ section.settings.description }}
+            </div>
+          {% else %}
+            {%- assign description_tag = section.settings.description_as | default: 'p' -%}
+            <{{ description_tag }} class="vso-testimonials-05__description">
+              {{ section.settings.description }}
+            </{{ description_tag }}>
+          {% endif %}
+        {% endif %}
+
+        {% if section.settings.show_stats %}
+          <div class="vso-testimonials-05__stats">
+            {% if section.settings.stat_1_number != blank %}
+              <div class="vso-testimonials-05__stat">
+                <div class="vso-testimonials-05__stat-number">
+                  {{ section.settings.stat_1_number }}
+                </div>
+                <div class="vso-testimonials-05__stat-label">
+                  {{ section.settings.stat_1_label }}
+                </div>
+              </div>
+            {% endif %}
+
+            {% if section.settings.stat_2_number != blank %}
+              <div class="vso-testimonials-05__stat">
+                <div class="vso-testimonials-05__stat-number">
+                  {{ section.settings.stat_2_number }}
+                </div>
+                <div class="vso-testimonials-05__stat-label">
+                  {{ section.settings.stat_2_label }}
+                </div>
+              </div>
+            {% endif %}
+
+            {% if section.settings.stat_3_number != blank %}
+              <div class="vso-testimonials-05__stat">
+                <div class="vso-testimonials-05__stat-number">
+                  {{ section.settings.stat_3_number }}
+                </div>
+                <div class="vso-testimonials-05__stat-label">
+                  {{ section.settings.stat_3_label }}
+                </div>
+              </div>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+
+      {% if section.blocks.size > 0 %}
+        <div class="vso-testimonials-05__testimonials">
+          <div class="swiper vso-testimonials-05__swiper">
+            <div class="swiper-wrapper">
+              {% for block in section.blocks %}
+                <div class="swiper-slide">
+                  <div class="vso-testimonials-05__testimonial" {{ block.shopify_attributes }}>
+                    {% if block.settings.show_stars %}
+                      <div class="vso-testimonials-05__stars">
+                        {%- liquid
+                          assign rating = block.settings.star_rating
+                          assign full_stars = rating | floor
+                          assign half_star = rating | modulo: 1
+                          assign empty_stars = 5 | minus: full_stars
+                          if half_star >= 0.5
+                            assign empty_stars = empty_stars | minus: 1
+                          endif
+                        -%}
+                        {% for i in (1..full_stars) %}
+                          <svg class="vso-testimonials-05__star" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                          </svg>
+                        {% endfor %}
+                        {% if half_star >= 0.5 %}
+                          <svg class="vso-testimonials-05__star" viewBox="0 0 24 24">
+                            <defs>
+                              <linearGradient id="half-testimonial-{{ block.id }}" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="50%" style="stop-color:{{ section.settings.star_color }};stop-opacity:1" />
+                                <stop offset="50%" style="stop-color:{{ section.settings.star_empty_color }};stop-opacity:1" />
+                              </linearGradient>
+                            </defs>
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="url(#half-testimonial-{{ block.id }})"/>
+                          </svg>
+                        {% endif %}
+                        {% for i in (1..empty_stars) %}
+                          <svg class="vso-testimonials-05__star" viewBox="0 0 24 24" fill="{{ section.settings.star_empty_color }}">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                          </svg>
+                        {% endfor %}
+                      </div>
+                    {% endif %}
+
+                    {% if block.settings.title != blank %}
+                      {% if section.settings.custom_testimonial_title_font %}
+                        <div class="vso-testimonials-05__testimonial-title">
+                          {{ block.settings.title }}
+                        </div>
+                      {% else %}
+                        {%- assign testimonial_title_tag = section.settings.testimonial_title_as | default: 'h3' -%}
+                        <{{ testimonial_title_tag }} class="vso-testimonials-05__testimonial-title">
+                          {{ block.settings.title }}
+                        </{{ testimonial_title_tag }}>
+                      {% endif %}
+                    {% endif %}
+
+                    {% if block.settings.content != blank %}
+                      {% if section.settings.custom_testimonial_content_font %}
+                        <div class="vso-testimonials-05__testimonial-content">
+                          {{ block.settings.content }}
+                        </div>
+                      {% else %}
+                        {%- assign testimonial_content_tag = section.settings.testimonial_content_as | default: 'p' -%}
+                        <{{ testimonial_content_tag }} class="vso-testimonials-05__testimonial-content">
+                          {{ block.settings.content }}
+                        </{{ testimonial_content_tag }}>
+                      {% endif %}
+                    {% endif %}
+
+                    {% if block.settings.author_date != blank %}
+                      {% if section.settings.custom_author_date_font %}
+                        <div class="vso-testimonials-05__author-date">
+                          {{ block.settings.author_date }}
+                        </div>
+                      {% else %}
+                        {%- assign author_date_tag = section.settings.author_date_as | default: 'p' -%}
+                        <{{ author_date_tag }} class="vso-testimonials-05__author-date">
+                          {{ block.settings.author_date }}
+                        </{{ author_date_tag }}>
+                      {% endif %}
+                    {% endif %}
+
+                    {% if block.settings.author_name != blank %}
+                      <div class="vso-testimonials-05__author-row">
+                        <div class="vso-testimonials-05__author">
+                          {% assign first_initial = block.settings.author_name | slice: 0, 1 | upcase %}
+                          <div class="vso-testimonials-05__author-avatar">
+                            {{ first_initial }}
+                          </div>
+                          <div class="vso-testimonials-05__author-info">
+                            {% if section.settings.custom_author_name_font %}
+                              <div class="vso-testimonials-05__author-name">
+                                {{ block.settings.author_name }}
+                              </div>
+                            {% else %}
+                              {%- assign author_name_tag = section.settings.author_name_as | default: 'p' -%}
+                              <{{ author_name_tag }} class="vso-testimonials-05__author-name">
+                                {{ block.settings.author_name }}
+                              </{{ author_name_tag }}>
+                            {% endif %}
+                            {% if block.settings.author_location != blank %}
+                              {% if section.settings.custom_author_location_font %}
+                                <div class="vso-testimonials-05__author-location">
+                                  {{ block.settings.author_location }}
+                                </div>
+                              {% else %}
+                                {%- assign author_location_tag = section.settings.author_location_as | default: 'p' -%}
+                                <{{ author_location_tag }} class="vso-testimonials-05__author-location">
+                                  {{ block.settings.author_location }}
+                                </{{ author_location_tag }}>
+                              {% endif %}
+                            {% endif %}
+                          </div>
+                        </div>
+                        
+                        {% if section.blocks.size > 1 and section.settings.show_navigation %}
+                          <div class="vso-testimonials-05__navigation-arrows">
+                            <div class="vso-testimonials-05__nav-prev">
+                              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform: scaleX(-1);">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M8.29289 4.29289C8.68342 3.90237 9.31658 3.90237 9.70711 4.29289L16.7071 11.2929C17.0976 11.6834 17.0976 12.3166 16.7071 12.7071L9.70711 19.7071C9.31658 20.0976 8.68342 20.0976 8.29289 19.7071C7.90237 19.3166 7.90237 18.6834 8.29289 18.2929L14.5858 12L8.29289 5.70711C7.90237 5.31658 7.90237 4.68342 8.29289 4.29289Z" fill="currentColor"/>
+                              </svg>
+                            </div>
+                            <div class="vso-testimonials-05__nav-next">
+                              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M8.29289 4.29289C8.68342 3.90237 9.31658 3.90237 9.70711 4.29289L16.7071 11.2929C17.0976 11.6834 17.0976 12.3166 16.7071 12.7071L9.70711 19.7071C9.31658 20.0976 8.68342 20.0976 8.29289 19.7071C7.90237 19.3166 7.90237 18.6834 8.29289 18.2929L14.5858 12L8.29289 5.70711C7.90237 5.31658 7.90237 4.68342 8.29289 4.29289Z" fill="currentColor"/>
+                              </svg>
+                            </div>
+                          </div>
+                        {% endif %}
+                      </div>
+                    {% endif %}
+
+                    {% if section.blocks.size > 1 %}
+                      <div class="vso-testimonials-05__custom-pagination">
+                        {% for i in (1..section.blocks.size) %}
+                          <div class="vso-testimonials-05__pagination-bullet" data-slide="{{ forloop.index0 }}"></div>
+                        {% endfor %}
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
+
+<script defer>
+document.addEventListener('DOMContentLoaded', function() {
+  {% if section_full_width %}
+    const section = document.getElementById('shopify-section-{{ section.id }}');
+    if (section) {
+      section.classList.add('section-full-width-enabled');
+    }
+  {% endif %}
+
+  if (document.querySelector('.vso-testimonials-05__swiper')) {
+    const swiperConfig = {
+      loop: true,
+      slidesPerView: 1,
+      spaceBetween: 0,
+      autoplay: {
+        delay: {{ section.settings.autoplay_delay }},
+        disableOnInteraction: false,
+      },
+      navigation: {
+        nextEl: '.vso-testimonials-05__nav-next',
+        prevEl: '.vso-testimonials-05__nav-prev',
+      },
+      speed: 600,
+      effect: 'fade',
+      fadeEffect: {
+        crossFade: true
+      },
+      on: {
+        slideChange: function() {
+          updateCustomPagination(this.realIndex);
+        }
+      }
+    };
+
+    const testimonialSwiper = new Swiper('.vso-testimonials-05__swiper', swiperConfig);
+
+    function updateCustomPagination(activeIndex) {
+      const allPaginationContainers = document.querySelectorAll('.vso-testimonials-05__custom-pagination');
+      
+      allPaginationContainers.forEach(container => {
+        const bullets = container.querySelectorAll('.vso-testimonials-05__pagination-bullet');
+        bullets.forEach((bullet, index) => {
+          bullet.classList.toggle('active', index === activeIndex);
+        });
+      });
+    }
+
+    const paginationBullets = document.querySelectorAll('.vso-testimonials-05__pagination-bullet');
+    paginationBullets.forEach((bullet) => {
+      bullet.addEventListener('click', () => {
+        const slideIndex = parseInt(bullet.getAttribute('data-slide'));
+        testimonialSwiper.slideToLoop(slideIndex);
+        updateCustomPagination(slideIndex);
+      });
+    });
+
+    updateCustomPagination(0);
+  }
+});
+</script>
+
+{% schema %}
+{
+  "name": "VSO - Testimonials 05",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "section_full_width",
+      "label": "Full width",
+      "info": "Makes the section span the full browser width",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "section_max_width",
+      "min": 1000,
+      "max": 1900,
+      "step": 50,
+      "unit": "px",
+      "label": "Content max width",
+      "info": "Only applies when full width is disabled",
+      "default": 1200
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Desktop side spacing",
+      "default": 48,
+      "info": "Adds spacing on the left and right sides of this section on desktop."
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Mobile side spacing",
+      "default": 24,
+      "info": "Adds spacing on the left and right sides of this section on mobile."
+    },
+    {
+      "type": "header",
+      "content": "Section Layout"
+    },
+    {
+      "type": "range",
+      "id": "text_container_max_width",
+      "min": 300,
+      "max": 800,
+      "step": 25,
+      "unit": "px",
+      "label": "Text container max width",
+      "info": "Maximum width for the text content on desktop",
+      "default": 600
+    },
+    {
+      "type": "range",
+      "id": "content_testimonial_gap",
+      "min": 20,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "label": "Gap between text and testimonial",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "mobile_gap",
+      "min": 20,
+      "max": 80,
+      "step": 10,
+      "unit": "px",
+      "label": "Mobile gap between sections",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Content alignment"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment_desktop",
+      "label": "Desktop content alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment_mobile",
+      "label": "Mobile content alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "stats_alignment_desktop",
+      "label": "Desktop statistics alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "stats_alignment_mobile",
+      "label": "Mobile statistics alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "stat_numbers_alignment_desktop",
+      "label": "Desktop statistic numbers alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "stat_numbers_alignment_mobile",
+      "label": "Mobile statistic numbers alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Section background color"
+    },
+    {
+      "type": "select",
+      "id": "background_style",
+      "label": "Background type",
+      "options": [
+        { "value": "solid", "label": "Solid" },
+        { "value": "gradient", "label": "Gradient" }
+      ],
+      "default": "solid"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#F9FAFB"
+    },
+    {
+      "type": "color",
+      "id": "gradient_start_color",
+      "label": "Gradient start color (top)",
+      "default": "#F9FAFB"
+    },
+    {
+      "type": "color",
+      "id": "gradient_end_color",
+      "label": "Gradient end color (bottom)",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Desktop Section Margin"
+    },
+    {
+      "type": "range",
+      "id": "margin_top_desktop",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_desktop",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin bottom",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Mobile Section Margin"
+    },
+    {
+      "type": "range",
+      "id": "margin_top_mobile",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin bottom",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Desktop Section Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 80
+    },
+    {
+      "type": "header",
+      "content": "Mobile Section Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "Section Subtitle"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "subtitle",
+      "label": "Section subtitle",
+      "info": "Small text above the main title",
+      "default": "SLEEPING WELL WITH QUALITY PILLOWS"
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_subtitle_font",
+      "label": "Enable custom font settings",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "subtitle_as",
+      "label": "Render as",
+      "options": [
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" },
+        { "value": "h4", "label": "H4" },
+        { "value": "h5", "label": "H5" },
+        { "value": "p", "label": "Paragraph (p)" }
+      ],
+      "default": "p",
+      "visible_if": "{{ section.settings.custom_subtitle_font == false }}"
+    },
+    {
+      "type": "font_picker",
+      "id": "subtitle_font",
+      "label": "Subtitle font family",
+      "default": "helvetica_n4",
+      "visible_if": "{{ section.settings.custom_subtitle_font }}"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_font_weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "label": "Subtitle font weight",
+      "default": 600,
+      "visible_if": "{{ section.settings.custom_subtitle_font }}"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle text color",
+      "default": "#8B5CF6",
+      "visible_if": "{{ section.settings.custom_subtitle_font }}"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_bg_color",
+      "label": "Subtitle background color",
+      "default": "#F3F4F6",
+      "visible_if": "{{ section.settings.custom_subtitle_font }}"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size_desktop",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Desktop subtitle size",
+      "default": 14,
+      "visible_if": "{{ section.settings.custom_subtitle_font }}"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size_mobile",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Mobile subtitle size",
+      "default": 12,
+      "visible_if": "{{ section.settings.custom_subtitle_font }}"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_line_height",
+      "min": 100,
+      "max": 180,
+      "step": 10,
+      "unit": "%",
+      "label": "Subtitle line height",
+      "default": 140,
+      "visible_if": "{{ section.settings.custom_subtitle_font }}"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_margin_bottom",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Subtitle bottom margin",
+      "default": 16,
+      "visible_if": "{{ section.settings.custom_subtitle_font }}"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_padding_vertical",
+      "min": 2,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "label": "Vertical padding",
+      "default": 6,
+      "visible_if": "{{ section.settings.custom_subtitle_font }}"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_padding_horizontal",
+      "min": 4,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "label": "Horizontal padding",
+      "default": 12,
+      "visible_if": "{{ section.settings.custom_subtitle_font }}"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_border_radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "label": "Border radius",
+      "default": 6,
+      "visible_if": "{{ section.settings.custom_subtitle_font }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_subtitle_dot",
+      "label": "Show decorative dot",
+      "default": true,
+      "visible_if": "{{ section.settings.custom_subtitle_font }}"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_dot_size",
+      "min": 4,
+      "max": 12,
+      "step": 1,
+      "unit": "px",
+      "label": "Dot size",
+      "default": 6,
+      "visible_if": "{{ section.settings.custom_subtitle_font }}"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_dot_color",
+      "label": "Dot color",
+      "default": "#8B5CF6",
+      "visible_if": "{{ section.settings.custom_subtitle_font }}"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_dot_spacing",
+      "min": 4,
+      "max": 16,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap between dot and text",
+      "default": 8,
+      "visible_if": "{{ section.settings.custom_subtitle_font }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_subtitle_dot_pulse",
+      "label": "Enable pulsing animation",
+      "default": true,
+      "visible_if": "{{ section.settings.custom_subtitle_font }}"
+    },
+    {
+      "type": "header",
+      "content": "Section Title"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "title",
+      "label": "Main heading",
+      "info": "Primary section title",
+      "default": "Thousands of <em>happy customers</em>"
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_title_font",
+      "label": "Enable custom font settings",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "title_as",
+      "label": "Render as",
+      "options": [
+        { "value": "h1", "label": "H1" },
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" },
+        { "value": "h4", "label": "H4" },
+        { "value": "h5", "label": "H5" },
+        { "value": "p", "label": "Paragraph (p)" }
+      ],
+      "default": "h2",
+      "visible_if": "{{ section.settings.custom_title_font == false }}"
+    },
+    {
+      "type": "font_picker",
+      "id": "title_font",
+      "label": "Title font family",
+      "default": "helvetica_n4",
+      "visible_if": "{{ section.settings.custom_title_font }}"
+    },
+    {
+      "type": "range",
+      "id": "title_font_weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "label": "Title font weight",
+      "default": 700,
+      "visible_if": "{{ section.settings.custom_title_font }}"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title text color",
+      "default": "#1F2937",
+      "visible_if": "{{ section.settings.custom_title_font }}"
+    },
+    {
+      "type": "range",
+      "id": "title_size_desktop",
+      "min": 24,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Desktop title size",
+      "default": 42,
+      "visible_if": "{{ section.settings.custom_title_font }}"
+    },
+    {
+      "type": "range",
+      "id": "title_size_mobile",
+      "min": 20,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile title size",
+      "default": 32,
+      "visible_if": "{{ section.settings.custom_title_font }}"
+    },
+    {
+      "type": "range",
+      "id": "title_line_height",
+      "min": 100,
+      "max": 160,
+      "step": 10,
+      "unit": "%",
+      "label": "Title line height",
+      "default": 120,
+      "visible_if": "{{ section.settings.custom_title_font }}"
+    },
+    {
+      "type": "range",
+      "id": "title_margin_bottom",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Title bottom margin",
+      "default": 20,
+      "visible_if": "{{ section.settings.custom_title_font }}"
+    },
+    {
+      "type": "header",
+      "content": "Section Description"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "description",
+      "label": "Description text",
+      "info": "Supporting text below the main title",
+      "default": "Discover why customers across the country are raving about their sleep transformation. Each review tells a story of better nights and brighter mornings."
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_description_font",
+      "label": "Enable custom font settings",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "description_as",
+      "label": "Render as",
+      "options": [
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" },
+        { "value": "h4", "label": "H4" },
+        { "value": "h5", "label": "H5" },
+        { "value": "p", "label": "Paragraph (p)" }
+      ],
+      "default": "p",
+      "visible_if": "{{ section.settings.custom_description_font == false }}"
+    },
+    {
+      "type": "font_picker",
+      "id": "description_font",
+      "label": "Description font family",
+      "default": "helvetica_n4",
+      "visible_if": "{{ section.settings.custom_description_font }}"
+    },
+    {
+      "type": "range",
+      "id": "description_font_weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "label": "Description font weight",
+      "default": 400,
+      "visible_if": "{{ section.settings.custom_description_font }}"
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description text color",
+      "default": "#6B7280",
+      "visible_if": "{{ section.settings.custom_description_font }}"
+    },
+    {
+      "type": "range",
+      "id": "description_size_desktop",
+      "min": 14,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Desktop description size",
+      "default": 16,
+      "visible_if": "{{ section.settings.custom_description_font }}"
+    },
+    {
+      "type": "range",
+      "id": "description_size_mobile",
+      "min": 14,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Mobile description size",
+      "default": 15,
+      "visible_if": "{{ section.settings.custom_description_font }}"
+    },
+    {
+      "type": "range",
+      "id": "description_line_height",
+      "min": 120,
+      "max": 180,
+      "step": 10,
+      "unit": "%",
+      "label": "Description line height",
+      "default": 150,
+      "visible_if": "{{ section.settings.custom_description_font }}"
+    },
+    {
+      "type": "range",
+      "id": "description_margin_bottom",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Description bottom margin",
+      "default": 24,
+      "visible_if": "{{ section.settings.custom_description_font }}"
+    },
+    {
+      "type": "header",
+      "content": "Testimonial Card Design"
+    },
+    {
+      "type": "color",
+      "id": "testimonial_bg_color",
+      "label": "Card background color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "testimonial_border_radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "label": "Card border radius",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "testimonial_padding",
+      "min": 16,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Card inner padding",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "testimonial_border_width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "label": "Card border width",
+      "default": 0
+    },
+    {
+      "type": "color",
+      "id": "testimonial_border_color",
+      "label": "Card border color",
+      "default": "#E5E7EB"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_testimonial_shadow",
+      "label": "Enable card shadow",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "testimonial_shadow_color",
+      "label": "Card shadow color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Star Rating Display"
+    },
+    {
+      "type": "range",
+      "id": "star_size_desktop",
+      "min": 16,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Desktop star size",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "star_size_mobile",
+      "min": 14,
+      "max": 28,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile star size",
+      "default": 18
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star color",
+      "default": "#8B5CF6"
+    },
+    {
+      "type": "color",
+      "id": "star_empty_color",
+      "label": "Empty star color",
+      "default": "#e5e7eb"
+    },
+    {
+      "type": "range",
+      "id": "stars_margin_bottom",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "label": "Stars bottom margin",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Testimonial Title Styling"
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_testimonial_title_font",
+      "label": "Enable custom font settings",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "testimonial_title_as",
+      "label": "Render as",
+      "options": [
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" },
+        { "value": "h4", "label": "H4" },
+        { "value": "h5", "label": "H5" },
+        { "value": "p", "label": "Paragraph (p)" }
+      ],
+      "default": "h3",
+      "visible_if": "{{ section.settings.custom_testimonial_title_font == false }}"
+    },
+    {
+      "type": "font_picker",
+      "id": "testimonial_title_font",
+      "label": "Testimonial title font",
+      "default": "helvetica_n4",
+      "visible_if": "{{ section.settings.custom_testimonial_title_font }}"
+    },
+    {
+      "type": "range",
+      "id": "testimonial_title_size_desktop",
+      "min": 16,
+      "max": 28,
+      "step": 2,
+      "unit": "px",
+      "label": "Desktop title size",
+      "default": 20,
+      "visible_if": "{{ section.settings.custom_testimonial_title_font }}"
+    },
+    {
+      "type": "range",
+      "id": "testimonial_title_size_mobile",
+      "min": 14,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile title size",
+      "default": 18,
+      "visible_if": "{{ section.settings.custom_testimonial_title_font }}"
+    },
+    {
+      "type": "color",
+      "id": "testimonial_title_color",
+      "label": "Title text color",
+      "default": "#1F2937",
+      "visible_if": "{{ section.settings.custom_testimonial_title_font }}"
+    },
+    {
+      "type": "range",
+      "id": "testimonial_title_font_weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "label": "Title font weight",
+      "default": 600,
+      "visible_if": "{{ section.settings.custom_testimonial_title_font }}"
+    },
+    {
+      "type": "range",
+      "id": "testimonial_title_line_height",
+      "min": 100,
+      "max": 160,
+      "step": 10,
+      "unit": "%",
+      "label": "Title line height",
+      "default": 130,
+      "visible_if": "{{ section.settings.custom_testimonial_title_font }}"
+    },
+    {
+      "type": "range",
+      "id": "testimonial_title_margin_bottom",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "label": "Title bottom margin",
+      "default": 12,
+      "visible_if": "{{ section.settings.custom_testimonial_title_font }}"
+    },
+    {
+      "type": "header",
+      "content": "Testimonial Content Styling"
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_testimonial_content_font",
+      "label": "Enable custom font settings",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "testimonial_content_as",
+      "label": "Render as",
+      "options": [
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" },
+        { "value": "h4", "label": "H4" },
+        { "value": "h5", "label": "H5" },
+        { "value": "p", "label": "Paragraph (p)" }
+      ],
+      "default": "p",
+      "visible_if": "{{ section.settings.custom_testimonial_content_font == false }}"
+    },
+    {
+      "type": "font_picker",
+      "id": "testimonial_content_font",
+      "label": "Testimonial content font",
+      "default": "helvetica_n4",
+      "visible_if": "{{ section.settings.custom_testimonial_content_font }}"
+    },
+    {
+      "type": "range",
+      "id": "testimonial_content_size_desktop",
+      "min": 14,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Desktop content size",
+      "default": 16,
+      "visible_if": "{{ section.settings.custom_testimonial_content_font }}"
+    },
+    {
+      "type": "range",
+      "id": "testimonial_content_size_mobile",
+      "min": 13,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Mobile content size",
+      "default": 15,
+      "visible_if": "{{ section.settings.custom_testimonial_content_font }}"
+    },
+    {
+      "type": "color",
+      "id": "testimonial_content_color",
+      "label": "Content text color",
+      "default": "#4B5563",
+      "visible_if": "{{ section.settings.custom_testimonial_content_font }}"
+    },
+    {
+      "type": "range",
+      "id": "testimonial_content_font_weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "label": "Content font weight",
+      "default": 400,
+      "visible_if": "{{ section.settings.custom_testimonial_content_font }}"
+    },
+    {
+      "type": "range",
+      "id": "testimonial_content_line_height",
+      "min": 120,
+      "max": 180,
+      "step": 10,
+      "unit": "%",
+      "label": "Content line height",
+      "default": 150,
+      "visible_if": "{{ section.settings.custom_testimonial_content_font }}"
+    },
+    {
+      "type": "range",
+      "id": "testimonial_content_margin_bottom",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "label": "Content bottom margin",
+      "default": 16,
+      "visible_if": "{{ section.settings.custom_testimonial_content_font }}"
+    },
+    {
+      "type": "header",
+      "content": "Author Avatar"
+    },
+    {
+      "type": "range",
+      "id": "author_gap",
+      "min": 8,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap between avatar and info",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "avatar_size_desktop",
+      "min": 32,
+      "max": 56,
+      "step": 4,
+      "unit": "px",
+      "label": "Desktop avatar size",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "avatar_size_mobile",
+      "min": 28,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "label": "Mobile avatar size",
+      "default": 36
+    },
+    {
+      "type": "color",
+      "id": "avatar_bg_color",
+      "label": "Avatar background color",
+      "default": "#8B5CF6"
+    },
+    {
+      "type": "color",
+      "id": "avatar_text_color",
+      "label": "Avatar text color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "avatar_text_size_desktop",
+      "min": 14,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "label": "Desktop avatar text size",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "avatar_text_size_mobile",
+      "min": 12,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile avatar text size",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Author Name Styling"
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_author_name_font",
+      "label": "Enable custom font settings",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "author_name_as",
+      "label": "Render as",
+      "options": [
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" },
+        { "value": "h4", "label": "H4" },
+        { "value": "h5", "label": "H5" },
+        { "value": "p", "label": "Paragraph (p)" }
+      ],
+      "default": "p",
+      "visible_if": "{{ section.settings.custom_author_name_font == false }}"
+    },
+    {
+      "type": "font_picker",
+      "id": "author_name_font",
+      "label": "Author name font family",
+      "default": "helvetica_n4",
+      "visible_if": "{{ section.settings.custom_author_name_font }}"
+    },
+    {
+      "type": "range",
+      "id": "author_name_size_desktop",
+      "min": 14,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Desktop name size",
+      "default": 16,
+      "visible_if": "{{ section.settings.custom_author_name_font }}"
+    },
+    {
+      "type": "range",
+      "id": "author_name_size_mobile",
+      "min": 13,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Mobile name size",
+      "default": 15,
+      "visible_if": "{{ section.settings.custom_author_name_font }}"
+    },
+    {
+      "type": "color",
+      "id": "author_name_color",
+      "label": "Name text color",
+      "default": "#1F2937",
+      "visible_if": "{{ section.settings.custom_author_name_font }}"
+    },
+    {
+      "type": "range",
+      "id": "author_name_font_weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "label": "Name font weight",
+      "default": 600,
+      "visible_if": "{{ section.settings.custom_author_name_font }}"
+    },
+    {
+      "type": "header",
+      "content": "Author Location Styling"
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_author_location_font",
+      "label": "Enable custom font settings",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "author_location_as",
+      "label": "Render as",
+      "options": [
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" },
+        { "value": "h4", "label": "H4" },
+        { "value": "h5", "label": "H5" },
+        { "value": "p", "label": "Paragraph (p)" }
+      ],
+      "default": "p",
+      "visible_if": "{{ section.settings.custom_author_location_font == false }}"
+    },
+    {
+      "type": "font_picker",
+      "id": "author_location_font",
+      "label": "Author location font family",
+      "default": "helvetica_n4",
+      "visible_if": "{{ section.settings.custom_author_location_font }}"
+    },
+    {
+      "type": "range",
+      "id": "author_location_size_desktop",
+      "min": 12,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Desktop location size",
+      "default": 14,
+      "visible_if": "{{ section.settings.custom_author_location_font }}"
+    },
+    {
+      "type": "range",
+      "id": "author_location_size_mobile",
+      "min": 11,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "label": "Mobile location size",
+      "default": 13,
+      "visible_if": "{{ section.settings.custom_author_location_font }}"
+    },
+    {
+      "type": "color",
+      "id": "author_location_color",
+      "label": "Location text color",
+      "default": "#6B7280",
+      "visible_if": "{{ section.settings.custom_author_location_font }}"
+    },
+    {
+      "type": "range",
+      "id": "author_location_font_weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "label": "Location font weight",
+      "default": 400,
+      "visible_if": "{{ section.settings.custom_author_location_font }}"
+    },
+    {
+      "type": "header",
+      "content": "Review Date Styling"
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_author_date_font",
+      "label": "Enable custom font settings",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "author_date_as",
+      "label": "Render as",
+      "options": [
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" },
+        { "value": "h4", "label": "H4" },
+        { "value": "h5", "label": "H5" },
+        { "value": "p", "label": "Paragraph (p)" }
+      ],
+      "default": "p",
+      "visible_if": "{{ section.settings.custom_author_date_font == false }}"
+    },
+    {
+      "type": "font_picker",
+      "id": "author_date_font",
+      "label": "Review date font family",
+      "default": "helvetica_n4",
+      "visible_if": "{{ section.settings.custom_author_date_font }}"
+    },
+    {
+      "type": "range",
+      "id": "author_date_size_desktop",
+      "min": 12,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "label": "Desktop date size",
+      "default": 14,
+      "visible_if": "{{ section.settings.custom_author_date_font }}"
+    },
+    {
+      "type": "range",
+      "id": "author_date_size_mobile",
+      "min": 11,
+      "max": 15,
+      "step": 1,
+      "unit": "px",
+      "label": "Mobile date size",
+      "default": 13,
+      "visible_if": "{{ section.settings.custom_author_date_font }}"
+    },
+    {
+      "type": "color",
+      "id": "author_date_color",
+      "label": "Date text color",
+      "default": "#9CA3AF",
+      "visible_if": "{{ section.settings.custom_author_date_font }}"
+    },
+    {
+      "type": "range",
+      "id": "author_date_font_weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "label": "Date font weight",
+      "default": 400,
+      "visible_if": "{{ section.settings.custom_author_date_font }}"
+    },
+    {
+      "type": "header",
+      "content": "Review Date Badge Design"
+    },
+    {
+      "type": "color",
+      "id": "date_bg_color",
+      "label": "Badge background color",
+      "default": "#F3F4F6"
+    },
+    {
+      "type": "range",
+      "id": "date_padding_vertical",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "unit": "px",
+      "label": "Badge vertical padding",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "date_padding_horizontal",
+      "min": 4,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "label": "Badge horizontal padding",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "date_border_radius",
+      "min": 0,
+      "max": 12,
+      "step": 1,
+      "unit": "px",
+      "label": "Badge border radius",
+      "default": 4
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_date_shadow",
+      "label": "Enable badge shadow",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "date_shadow_color",
+      "label": "Badge shadow color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Carousel Navigation"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_navigation",
+      "label": "Show navigation arrows",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_delay",
+      "min": 2000,
+      "max": 9000,
+      "step": 500,
+      "unit": "ms",
+      "label": "Autoplay delay",
+      "info": "Time between automatic slides",
+      "default": 5000
+    },
+    {
+      "type": "header",
+      "content": "Arrow Button Styling"
+    },
+    {
+      "type": "range",
+      "id": "nav_arrow_size",
+      "min": 32,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "label": "Arrow button size",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "nav_arrow_spacing",
+      "min": 4,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap between arrows",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "nav_arrow_margin_top",
+      "min": 8,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Space above arrows",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "nav_arrow_bg_color",
+      "label": "Arrow background color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "nav_arrow_icon_color",
+      "label": "Arrow icon color",
+      "default": "#6B7280"
+    },
+    {
+      "type": "color",
+      "id": "nav_arrow_border_color",
+      "label": "Arrow border color",
+      "default": "#E5E7EB"
+    },
+    {
+      "type": "range",
+      "id": "nav_arrow_border_width",
+      "min": 0,
+      "max": 3,
+      "step": 1,
+      "unit": "px",
+      "label": "Arrow border width",
+      "default": 1
+    },
+    {
+      "type": "header",
+      "content": "Pagination Dots Styling"
+    },
+    {
+      "type": "color",
+      "id": "pagination_bullet_color",
+      "label": "Inactive bullet color",
+      "default": "#D1D5DB"
+    },
+    {
+      "type": "color",
+      "id": "pagination_bullet_active_color",
+      "label": "Active bullet color",
+      "default": "#8B5CF6"
+    },
+    {
+      "type": "header",
+      "content": "Statistics Content"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_stats",
+      "label": "Show statistics section",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "stat_1_number",
+      "label": "First statistic number",
+      "default": "2,847"
+    },
+    {
+      "type": "text",
+      "id": "stat_1_label",
+      "label": "First statistic label",
+      "default": "Happy Customers"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_number",
+      "label": "Second statistic number",
+      "default": "4.9"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_label",
+      "label": "Second statistic label",
+      "default": "Average Rating"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_number",
+      "label": "Third statistic number",
+      "default": "98%"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_label",
+      "label": "Third statistic label",
+      "default": "Would Recommend"
+    },
+    {
+      "type": "header",
+      "content": "Statistics Styling"
+    },
+    {
+      "type": "color",
+      "id": "stat_number_color",
+      "label": "Statistic number color",
+      "default": "#8B5CF6"
+    },
+    {
+      "type": "range",
+      "id": "stat_number_font_weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "label": "Statistic number font weight",
+      "default": 700
+    },
+    {
+      "type": "color",
+      "id": "stat_label_color",
+      "label": "Statistic label color",
+      "default": "#6B7280"
+    },
+    {
+      "type": "range",
+      "id": "stat_label_font_weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "label": "Statistic label font weight",
+      "default": 400
+    },
+    {
+      "type": "color",
+      "id": "stat_divider_color",
+      "label": "Statistic divider color",
+      "default": "#E5E7EB"
+    },
+    {
+      "type": "range",
+      "id": "stat_number_size_desktop",
+      "min": 18,
+      "max": 36,
+      "step": 2,
+      "unit": "px",
+      "label": "Desktop statistic number size",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "stat_number_size_mobile",
+      "min": 16,
+      "max": 28,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile statistic number size",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "stat_label_size_desktop",
+      "min": 12,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Desktop statistic label size",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "stat_label_size_mobile",
+      "min": 11,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "label": "Mobile statistic label size",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "stats_gap",
+      "min": 20,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "label": "Gap between statistics",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "stats_margin_top",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Statistics top margin",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "limit": 10,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Testimonial Content"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_stars",
+          "label": "Show star rating",
+          "default": true
+        },
+        {
+          "type": "range",
+          "id": "star_rating",
+          "label": "Star rating",
+          "min": 0,
+          "max": 5,
+          "step": 0.5,
+          "default": 5
+        },
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "Testimonial title",
+          "default": "Super satisfied"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "content",
+          "label": "Testimonial content",
+          "default": "Super satisfied again! Versio does what it promises! I've been using it for months now and it's still as comfortable as day one."
+        },
+        {
+          "type": "text",
+          "id": "author_name",
+          "label": "Author name",
+          "default": "Chloe"
+        },
+        {
+          "type": "text",
+          "id": "author_location",
+          "label": "Author subtitle",
+          "info": "Can be location, company, title, or any other info",
+          "default": "Los Angeles, CA"
+        },
+        {
+          "type": "text",
+          "id": "author_date",
+          "label": "Review date",
+          "default": "2 days ago"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "VSO - Testimonials 05",
+      "blocks": [
+        {
+          "type": "testimonial"
+        },
+        {
+          "type": "testimonial"
+        },
+        {
+          "type": "testimonial"
+        },
+        {
+          "type": "testimonial"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

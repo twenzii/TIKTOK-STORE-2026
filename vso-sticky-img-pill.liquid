@@ -1,0 +1,394 @@
+{% comment %}
+WARNING: UNAUTHORIZED MODIFICATION PROHIBITED
+This code is proprietary property of Versio Studio. Any unauthorized tampering, 
+alteration, or distribution of this file is strictly forbidden and will be prosecuted to the maximum extent permitted by law.
+All modifications are logged.
+
+If you require assistance or have questions regarding this code, please contact support@versio.studio.
+{% endcomment %}
+
+{% style %}
+.section-{{ section.id }} .versio-section *,
+.section-{{ section.id }} .versio-section *::after,
+.section-{{ section.id }} .versio-section *::before {
+  box-sizing: border-box;
+}
+
+.section-{{ section.id }} .versio-section {
+  display: block;
+  max-width: 100%;
+  clear: both;
+}
+
+.versio-pill-badge-{{ section.id }} {
+  position: absolute;
+  bottom: {{ section.settings.padding_bottom }}px;
+  left: {{ section.settings.padding_left }}px;
+  background-color: {{ section.settings.background_color }};
+  color: {{ section.settings.text_color }};
+  font-size: {{ section.settings.font_size }}px;
+  font-weight: {{ section.settings.font_weight }};
+  padding: {{ section.settings.vertical_padding }}px {{ section.settings.horizontal_padding }}px;
+  border-radius: {{ section.settings.border_radius }}px;
+  z-index: 5;
+  max-width: 90%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: {{ section.settings.show_shadow | default: false | plus: 0 | times: '0 2px 4px rgba(0,0,0,0.1)' | default: 'none' }};
+}
+
+.versio-pill-badge-{{ section.id }} > img {
+  width: {{ section.settings.icon_size }}px;
+  height: {{ section.settings.icon_size }}px;
+  object-fit: contain;
+  border-radius: {{ section.settings.icon_border_radius }}px;
+}
+
+@media screen and (max-width: 767px) {
+  .versio-pill-badge-{{ section.id }} {
+    font-size: {{ section.settings.font_size_mobile }}px;
+    padding: {{ section.settings.vertical_padding_mobile }}px {{ section.settings.horizontal_padding_mobile }}px;
+    bottom: {{ section.settings.padding_bottom_mobile }}px;
+    left: {{ section.settings.padding_left_mobile }}px;
+  }
+  
+  .versio-pill-badge-{{ section.id }} > img {
+    width: {{ section.settings.icon_size_mobile }}px;
+    height: {{ section.settings.icon_size_mobile }}px;
+    border-radius: {{ section.settings.icon_border_radius }}px;
+  }
+}
+
+.vso-node {
+  display: none;
+}
+
+.vso-node--v2 {
+  display: flex;
+}
+{% endstyle %}
+
+{% if section.settings.custom_font %}
+<style>
+  .versio-pill-badge-{{ section.id }} {
+    font-family: {{ section.settings.font.family }}, {{ section.settings.font.fallback_families }};
+    font-style: {{ section.settings.font.style }};
+  }
+</style>
+{% endif %}
+
+<script>
+  (function() {
+    function positionPillBadge() {
+      const imageContainerSelectors = [
+        '.product__media-item:first-child',
+        '.product-single__media:first-child',
+        '.product-featured-media',
+        '.product-gallery__media:first-child',
+        '.product-image-main',
+        '.product-single__photo:first-child',
+        '.featured-img',
+        '[data-first-media-id]',
+        '.product__slide:first-child'
+      ];
+      
+      let imageContainer = null;
+      
+      for (const selector of imageContainerSelectors) {
+        const element = document.querySelector(selector);
+        if (element) {
+          imageContainer = element;
+          break;
+        }
+      }
+      
+      if (!imageContainer) return;
+      
+      if (imageContainer.querySelector('.versio-pill-badge-{{ section.id }}')) {
+        return; 
+      }
+      
+      const pillBadge = document.createElement('div');
+      pillBadge.className = 'versio-pill-badge-{{ section.id }} versio-section vso-node';
+      
+      {% if section.settings.icon != blank %}
+      const badgeIcon = document.createElement('img');
+      badgeIcon.src = "{{ section.settings.icon | image_url }}";
+      badgeIcon.alt = "";
+      badgeIcon.loading = "lazy";
+      pillBadge.appendChild(badgeIcon);
+      {% endif %}
+      
+      const badgeTextElement = document.createElement('p');
+      badgeTextElement.style.margin = '0'; // Ensure no default paragraph margins
+      badgeTextElement.textContent = "{{ section.settings.text }}";
+      pillBadge.appendChild(badgeTextElement);
+      
+      const computedStyle = window.getComputedStyle(imageContainer);
+      if (computedStyle.position === 'static') {
+        imageContainer.style.position = 'relative';
+      }
+      
+      imageContainer.appendChild(pillBadge);
+
+      // Check if the extension has already loaded and make visible if so
+      if (window.versioExtensionLoaded) {
+        pillBadge.classList.add('vso-node--v2');
+      }
+    }
+    
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', positionPillBadge);
+    } else {
+      setTimeout(positionPillBadge, 10);
+    }
+    
+    document.addEventListener('shopify:section:load', positionPillBadge);
+    
+    window.addEventListener('load', function() {
+      setTimeout(positionPillBadge, 100);
+    });
+    
+    setTimeout(positionPillBadge, 500);
+    setTimeout(positionPillBadge, 1000);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "VSO - Sticky Image Pill",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Badge Content"
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Badge Text",
+      "default": "Over 500k sold"
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_font",
+      "label": "Use Custom Font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "font",
+      "label": "Font",
+      "default": "poppins_n4"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Font Size",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "font_size_mobile",
+      "min": 8,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "label": "Font Size Mobile",
+      "default": 10
+    },
+    {
+      "type": "select",
+      "id": "font_weight",
+      "label": "Font Weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Regular"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semibold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "header",
+      "content": "Icon Settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon",
+      "label": "Icon (Optional)"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Icon Size",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "icon_size_mobile",
+      "min": 8,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Icon Size Mobile",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "icon_border_radius",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Icon Border Radius",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Style Settings"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Border Radius",
+      "default": 20
+    },
+    {
+      "type": "checkbox",
+      "id": "show_shadow",
+      "label": "Show Shadow",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Padding & Position"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 5,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 5,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Bottom Padding Mobile",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "padding_left",
+      "min": 5,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Left Padding",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "padding_left_mobile",
+      "min": 5,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Left Padding Mobile",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "horizontal_padding",
+      "min": 5,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Badge Horizontal Padding",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "horizontal_padding_mobile",
+      "min": 4,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Badge Horizontal Padding Mobile",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "vertical_padding",
+      "min": 2,
+      "max": 15,
+      "step": 1,
+      "unit": "px",
+      "label": "Badge Vertical Padding",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "vertical_padding_mobile",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "label": "Badge Vertical Padding Mobile",
+      "default": 4
+    }
+  ],
+  "presets": [
+    {
+      "name": "VSO - Sticky Img Pill",
+      "category": "Custom Content"
+    }
+  ]
+}
+{% endschema %}

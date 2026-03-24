@@ -1,0 +1,958 @@
+{%- liquid 
+  assign padding_horizontal = section.settings.padding_horizontal
+  assign padding_horizontal_mobile = section.settings.padding_horizontal_mobile
+  assign padding_top = section.settings.padding_top
+  assign padding_bottom = section.settings.padding_bottom
+  assign margin_top = section.settings.margin_top
+  assign margin_bottom = section.settings.margin_bottom
+  assign border_color = section.settings.border_color
+  assign border_thickness = section.settings.border_thickness
+  assign background_color = section.settings.background_color
+  assign background_gradient = section.settings.background_gradient
+
+  assign text = section.settings.text
+  assign text_size = section.settings.text_size
+  assign text_size_mobile = section.settings.text_size_mobile
+  assign text_color = section.settings.text_color
+  assign text_custom = section.settings.text_custom
+  assign text_font = section.settings.text_font
+  assign text_height = section.settings.text_height
+  assign text_align = section.settings.text_align
+
+  assign countdown_end_date = section.settings.countdown_end_date
+  assign countdown_end_time = section.settings.countdown_end_time
+  assign countdown_mode = section.settings.countdown_mode
+  assign countdown_duration_hours = section.settings.countdown_duration_hours
+  assign countdown_duration_minutes = section.settings.countdown_duration_minutes
+  assign countdown_duration_seconds = section.settings.countdown_duration_seconds
+  assign countdown_gap = section.settings.countdown_gap
+  assign countdown_gap_mobile = section.settings.countdown_gap_mobile
+
+  assign countdown_number_size = section.settings.countdown_number_size
+  assign countdown_number_size_mobile = section.settings.countdown_number_size_mobile
+  assign countdown_number_color = section.settings.countdown_number_color
+  assign countdown_number_custom = section.settings.countdown_number_custom
+  assign countdown_number_font = section.settings.countdown_number_font
+  assign countdown_number_weight = section.settings.countdown_number_weight
+
+  assign countdown_labels_size = section.settings.countdown_labels_size
+  assign countdown_labels_size_mobile = section.settings.countdown_labels_size_mobile
+  assign countdown_labels_color = section.settings.countdown_labels_color
+  assign countdown_labels_custom = section.settings.countdown_labels_custom
+  assign countdown_labels_font = section.settings.countdown_labels_font
+  assign countdown_labels_weight = section.settings.countdown_labels_weight
+  assign countdown_labels_mt = section.settings.countdown_labels_mt
+
+  assign label_days = section.settings.label_days
+  assign label_hours = section.settings.label_hours
+  assign label_minutes = section.settings.label_minutes
+  assign label_seconds = section.settings.label_seconds
+
+  assign button = section.settings.button
+  assign button_url = section.settings.button_url
+  assign button_size = section.settings.button_size
+  assign button_size_mobile = section.settings.button_size_mobile
+  assign button_color = section.settings.button_color
+  assign button_hover_color = section.settings.button_hover_color
+  assign button_custom = section.settings.button_custom
+  assign button_font = section.settings.button_font
+  assign button_weight = section.settings.button_weight
+  assign button_height = section.settings.button_height
+  assign button_ml = section.settings.button_ml
+  assign button_padding_vertical = section.settings.button_padding_vertical
+  assign button_padding_horizontal = section.settings.button_padding_horizontal
+  assign button_radius = section.settings.button_radius
+  assign button_border_thickness = section.settings.button_border_thickness
+  assign button_border_color = section.settings.button_border_color
+  assign button_border_hover_color = section.settings.button_border_hover_color
+  assign button_bg_color = section.settings.button_bg_color
+  assign button_bg_hover_color = section.settings.button_bg_hover_color
+-%}
+
+{%- style -%}
+  {% if text_custom %}{{ text_font | font_face: font_display: 'swap' }}{% endif %}
+  {% if countdown_number_custom %}{{ countdown_number_font | font_face: font_display: 'swap' }}{% endif %}
+  {% if countdown_labels_custom %}{{ countdown_labels_font | font_face: font_display: 'swap' }}{% endif %}
+  {% if button_custom %}{{ button_font | font_face: font_display: 'swap' }}{% endif %}
+
+  .section-{{ section.id }} {
+      border-top: solid {{ border_color }} {{ border_thickness }}px;
+      border-bottom: solid {{ border_color }} {{ border_thickness }}px;
+      margin-top: {{ margin_top | times: 0.75 | round: 0 }}px;
+      margin-bottom: {{ margin_bottom | times: 0.75 | round: 0 }}px;
+      overflow: hidden;
+      width: 100%;
+    }
+    
+    .section-{{ section.id }}-settings {
+      margin: 0 auto;
+      padding-top: {{ padding_top | times: 0.75 | round: 0 }}px;
+      padding-bottom: {{ padding_bottom | times: 0.75 | round: 0 }}px;
+      padding-left: {{ padding_horizontal_mobile }}rem;
+      padding-right: {{ padding_horizontal_mobile }}rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+  
+    .countdown-text-{{ section.id }} {
+      margin: 0;
+      font-size: {{ text_size_mobile }}px;
+      color: {{ text_color }};
+      line-height: {{ text_height }}%;
+      text-align: {{ text_align }};
+      text-transform: unset;
+    }
+    .countdown-text-{{ section.id }} p {
+      margin: 0;
+    }
+  
+    .countdown-timer-{{ section.id }} {
+      display: flex;
+      align-items: center;
+      gap: {{ countdown_gap_mobile }}px;
+      flex-wrap: wrap;
+    }
+  
+    .countdown-unit-{{ section.id }} {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: {{ countdown_labels_mt | times: 0.75 | round: 0 }}px;
+    }
+  
+    .countdown-number-{{ section.id }} {
+      margin: 0;
+      font-size: {{ countdown_number_size_mobile }}px;
+      color: {{ countdown_number_color }};
+      font-weight: {{ countdown_number_weight }};
+      line-height: 1;
+      text-transform: unset;
+    }
+  
+    .countdown-label-{{ section.id }} {
+      margin: 0;
+      font-size: {{ countdown_labels_size_mobile }}px;
+      color: {{ countdown_labels_color }};
+      font-weight: {{ countdown_labels_weight }};
+      line-height: 1;
+      text-transform: unset;
+    }
+  
+    .countdown-separator-{{ section.id }} {
+      margin: 0;
+      font-size: {{ countdown_number_size_mobile }}px;
+      color: {{ countdown_number_color }};
+      font-weight: {{ countdown_number_weight }};
+      line-height: 1;
+      margin-bottom: {{ countdown_labels_mt | times: 0.75 | round: 0 }}px;
+    }
+  
+    .countdown-btn-{{ section.id }} {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      margin-left: {{ button_ml | times: 0.75 | round: 0 }}px;
+      font-size: {{ button_size_mobile }}px;
+      font-weight: {{ button_weight }};
+      color: {{ button_color }};
+      line-height: {{ button_height }}%;
+      text-align: center;
+      text-transform: unset;
+      text-decoration: none;
+      padding: {{ button_padding_vertical | times: 0.75 | round: 0 }}px {{ button_padding_horizontal | times: 0.75 | round: 0 }}px;
+      border-radius: {{ button_radius }}px;
+      border: {{ button_border_thickness }}px solid {{ button_border_color }};
+      background-color: {{ button_bg_color }};
+      transition: all 0.25s ease 0s;
+      white-space: nowrap;
+    }
+
+  .vso-node {
+    display: none;
+  }
+  .vso-node--v2 {
+    display: block;
+  }
+  
+    .countdown-btn-{{ section.id }}:hover {
+      color: {{ button_hover_color }};
+      border: {{ button_border_thickness }}px solid {{ button_border_hover_color }};
+      background-color: {{ button_bg_hover_color }};
+      transition: all 0.25s ease 0s;
+    }
+    
+    @media(min-width: 1024px) {
+  
+      .section-{{ section.id }} {
+        margin-top: {{ margin_top }}px;
+        margin-bottom: {{ margin_bottom }}px;
+      }
+      
+      .section-{{ section.id }}-settings {
+        padding-top: {{ padding_top }}px;
+        padding-bottom: {{ padding_bottom }}px;
+        padding-left: {{ padding_horizontal }}rem;
+        padding-right: {{ padding_horizontal }}rem;
+        gap: 25px;
+      }
+  
+      .countdown-text-{{ section.id }} {
+        font-size: {{ text_size }}px;
+      }
+  
+      .countdown-timer-{{ section.id }} {
+        gap: {{ countdown_gap }}px;
+      }
+  
+      .countdown-unit-{{ section.id }} {
+        gap: {{ countdown_labels_mt }}px;
+      }
+  
+      .countdown-number-{{ section.id }} {
+        font-size: {{ countdown_number_size }}px;
+      }
+  
+      .countdown-label-{{ section.id }} {
+        font-size: {{ countdown_labels_size }}px;
+      }
+  
+      .countdown-separator-{{ section.id }} {
+        font-size: {{ countdown_number_size }}px;
+        margin-bottom: {{ countdown_labels_mt }}px;
+      }
+  
+      .countdown-btn-{{ section.id }} {
+        margin-left: {{ button_ml }}px;
+        padding: {{ button_padding_vertical }}px {{ button_padding_horizontal }}px;
+        font-size: {{ button_size }}px;
+      }
+    }
+    
+  {%- endstyle -%}
+  
+  {% if text_custom %}
+    <style>
+      .countdown-text-{{ section.id }} {
+        font-family: {{ text_font.family }}, {{ text_font.fallback_families }};
+        font-weight: {{ text_font.weight }};
+        font-style: {{ text_font.style }};
+      }
+    </style>
+  {% endif %}
+  
+  {% if countdown_number_custom %}
+    <style>
+      .countdown-number-{{ section.id }},
+      .countdown-separator-{{ section.id }} {
+        font-family: {{ countdown_number_font.family }}, {{ countdown_number_font.fallback_families }};
+        font-weight: {{ countdown_number_font.weight }};
+        font-style: {{ countdown_number_font.style }};
+      }
+    </style>
+  {% endif %}
+  
+  {% if countdown_labels_custom %}
+    <style>
+      .countdown-label-{{ section.id }} {
+        font-family: {{ countdown_labels_font.family }}, {{ countdown_labels_font.fallback_families }};
+        font-weight: {{ countdown_labels_font.weight }};
+        font-style: {{ countdown_labels_font.style }};
+      }
+    </style>
+  {% endif %}
+  
+  {% if button_custom %}
+    <style>
+      .countdown-btn-{{ section.id }} {
+        font-family: {{ button_font.family }}, {{ button_font.fallback_families }};
+        font-weight: {{ button_font.weight }};
+        font-style: {{ button_font.style }};
+      }
+    </style>
+  {% endif %}
+  
+  <div class="section-{{ section.id }} vso-node" style="background-color:{{ background_color }}; background-image: {{ background_gradient }};">
+      <div class="section-{{ section.id }}-settings">
+        {% if text != blank %}
+          <div class="countdown-text-{{ section.id }}">{{ text }}</div>
+        {% endif %}
+        
+        <div class="countdown-timer-{{ section.id }}" 
+             data-end-date="{{ countdown_end_date }}" 
+             data-end-time="{{ countdown_end_time }}"
+             data-countdown-mode="{{ countdown_mode }}"
+             data-duration-hours="{{ countdown_duration_hours }}"
+             data-duration-minutes="{{ countdown_duration_minutes }}"
+             data-duration-seconds="{{ countdown_duration_seconds }}"
+             data-section-id="{{ section.id }}">
+          
+          <div class="countdown-unit-{{ section.id }}">
+            <div class="countdown-number-{{ section.id }}" data-unit="days">00</div>
+            <div class="countdown-label-{{ section.id }}">{{ label_days }}</div>
+          </div>
+          
+          <div class="countdown-separator-{{ section.id }}">:</div>
+          
+          <div class="countdown-unit-{{ section.id }}">
+            <div class="countdown-number-{{ section.id }}" data-unit="hours">00</div>
+            <div class="countdown-label-{{ section.id }}">{{ label_hours }}</div>
+          </div>
+          
+          <div class="countdown-separator-{{ section.id }}">:</div>
+          
+          <div class="countdown-unit-{{ section.id }}">
+            <div class="countdown-number-{{ section.id }}" data-unit="minutes">00</div>
+            <div class="countdown-label-{{ section.id }}">{{ label_minutes }}</div>
+          </div>
+          
+          <div class="countdown-separator-{{ section.id }}">:</div>
+          
+          <div class="countdown-unit-{{ section.id }}">
+            <div class="countdown-number-{{ section.id }}" data-unit="seconds">00</div>
+            <div class="countdown-label-{{ section.id }}">{{ label_seconds }}</div>
+          </div>
+        </div>
+        
+        {% if button != blank and button_url != blank %}
+          <a href="{{ button_url }}" class="countdown-btn-{{ section.id }}">{{ button }}</a>
+        {% endif %}
+      </div>
+  </div>
+  
+  <script>
+    function initCountdownBar{{ section.id | replace: '-', '' }}() {
+      const timer = document.querySelector('[data-section-id="{{ section.id }}"]');
+      if (!timer) return;
+      
+      const countdownMode = timer.getAttribute('data-countdown-mode');
+      let targetDate;
+      
+      if (countdownMode === 'duration') {
+        const hours = parseInt(timer.getAttribute('data-duration-hours')) || 0;
+        const minutes = parseInt(timer.getAttribute('data-duration-minutes')) || 0;
+        const seconds = parseInt(timer.getAttribute('data-duration-seconds')) || 0;
+        
+        const totalMs = (hours * 60 * 60 + minutes * 60 + seconds) * 1000;
+        targetDate = new Date().getTime() + totalMs;
+      } else {
+        const endDate = timer.getAttribute('data-end-date');
+        const endTime = timer.getAttribute('data-end-time');
+        
+        if (!endDate) return;
+        targetDate = new Date(endDate + ' ' + (endTime || '23:59:59')).getTime();
+      }
+      
+      function updateCountdown() {
+        const now = new Date().getTime();
+        const distance = targetDate - now;
+        
+        if (distance < 0) {
+          timer.querySelector('[data-unit="days"]').textContent = '00';
+          timer.querySelector('[data-unit="hours"]').textContent = '00';
+          timer.querySelector('[data-unit="minutes"]').textContent = '00';
+          timer.querySelector('[data-unit="seconds"]').textContent = '00';
+          return;
+        }
+        
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        
+        timer.querySelector('[data-unit="days"]').textContent = days.toString().padStart(2, '0');
+        timer.querySelector('[data-unit="hours"]').textContent = hours.toString().padStart(2, '0');
+        timer.querySelector('[data-unit="minutes"]').textContent = minutes.toString().padStart(2, '0');
+        timer.querySelector('[data-unit="seconds"]').textContent = seconds.toString().padStart(2, '0');
+      }
+      
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+    }
+  
+    document.addEventListener('DOMContentLoaded', function() {
+      initCountdownBar{{ section.id | replace: '-', '' }}();
+    });
+    
+    if (Shopify.designMode) {
+       document.addEventListener('shopify:section:unload', function() {
+       });
+       document.addEventListener('shopify:section:load', function() {
+         setTimeout(initCountdownBar{{ section.id | replace: '-', '' }}, 100);
+       });
+    }
+  </script>
+  
+  {% schema %}
+{
+  "name": "VSO - Countdown Header 01",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content Settings"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Header Text",
+      "default": "<p>Black Friday Sale! <strong>70% OFF</strong> ends in:</p>",
+      "info": "Use 'Strong' for bold text styling"
+    },
+    {
+      "type": "text",
+      "id": "button",
+      "label": "Button Text",
+      "default": "Shop now!"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button URL",
+      "default": "/collections/all"
+    },
+    {
+      "type": "header",
+      "content": "Countdown Timer"
+    },
+    {
+      "type": "select",
+      "id": "countdown_mode",
+      "label": "Timer Mode",
+      "default": "fixed",
+      "options": [
+        {
+          "label": "Fixed End Date & Time",
+          "value": "fixed"
+        },
+        {
+          "label": "Duration from Page Load",
+          "value": "duration"
+        }
+      ],
+      "info": "Choose between counting down to a specific date/time or counting down from when the page loads"
+    },
+    {
+      "type": "text",
+      "id": "countdown_end_date",
+      "label": "End Date",
+      "default": "2025-12-31",
+      "info": "Format: YYYY-MM-DD (only used when mode is 'Fixed End Date & Time')"
+    },
+    {
+      "type": "text",
+      "id": "countdown_end_time",
+      "label": "End Time",
+      "default": "23:59:59",
+      "info": "Format: HH:MM:SS (24-hour format, only used when mode is 'Fixed End Date & Time')"
+    },
+    {
+      "type": "range",
+      "id": "countdown_duration_hours",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "label": "Duration Hours",
+      "default": 3,
+      "info": "Hours to count down from page load (only used when mode is 'Duration from Page Load')"
+    },
+    {
+      "type": "range",
+      "id": "countdown_duration_minutes",
+      "min": 0,
+      "max": 59,
+      "step": 1,
+      "label": "Duration Minutes",
+      "default": 0,
+      "info": "Additional minutes to count down from page load"
+    },
+    {
+      "type": "range",
+      "id": "countdown_duration_seconds",
+      "min": 0,
+      "max": 59,
+      "step": 1,
+      "label": "Duration Seconds",
+      "default": 0,
+      "info": "Additional seconds to count down from page load"
+    },
+    {
+      "type": "header",
+      "content": "Timer Labels"
+    },
+    {
+      "type": "text",
+      "id": "label_days",
+      "label": "Days Label",
+      "default": "Days"
+    },
+    {
+      "type": "text",
+      "id": "label_hours",
+      "label": "Hours Label",
+      "default": "Hrs"
+    },
+    {
+      "type": "text",
+      "id": "label_minutes",
+      "label": "Minutes Label",
+      "default": "Mins"
+    },
+    {
+      "type": "text",
+      "id": "label_seconds",
+      "label": "Seconds Label",
+      "default": "Secs"
+    },
+    {
+      "type": "header",
+      "content": "Header Text Styling"
+    },
+    {
+      "type": "checkbox",
+      "id": "text_custom",
+      "label": "Use Custom Font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "text_font",
+      "label": "Font Family",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "min": 10,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Font Size",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "text_size_mobile",
+      "min": 10,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Font Size - Mobile",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "text_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Line Height",
+      "default": 120
+    },
+    {
+      "type": "select",
+      "id": "text_align",
+      "label": "Text Alignment",
+      "default": "center",
+      "options": [
+        {
+          "label": "Left",
+          "value": "left"
+        },
+        {
+          "label": "Center",
+          "value": "center"
+        },
+        {
+          "label": "Right",
+          "value": "right"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Countdown Numbers Styling"
+    },
+    {
+      "type": "checkbox",
+      "id": "countdown_number_custom",
+      "label": "Use Custom Font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "countdown_number_font",
+      "label": "Font Family",
+      "default": "assistant_n7"
+    },
+    {
+      "type": "range",
+      "id": "countdown_number_size",
+      "min": 16,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Font Size",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "countdown_number_size_mobile",
+      "min": 16,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Font Size - Mobile",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "countdown_number_weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "label": "Font Weight",
+      "default": 700
+    },
+    {
+      "type": "range",
+      "id": "countdown_gap",
+      "min": 5,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "label": "Spacing Between Units",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "countdown_gap_mobile",
+      "min": 5,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "label": "Spacing Between Units - Mobile",
+      "default": 15
+    },
+    {
+      "type": "header",
+      "content": "Labels Styling"
+    },
+    {
+      "type": "checkbox",
+      "id": "countdown_labels_custom",
+      "label": "Use Custom Font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "countdown_labels_font",
+      "label": "Font Family",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "range",
+      "id": "countdown_labels_size",
+      "min": 8,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Font Size",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "countdown_labels_size_mobile",
+      "min": 8,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Font Size - Mobile",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "countdown_labels_weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "label": "Font Weight",
+      "default": 400
+    },
+    {
+      "type": "range",
+      "id": "countdown_labels_mt",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "label": "Top Spacing",
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Button Styling"
+    },
+    {
+      "type": "checkbox",
+      "id": "button_custom",
+      "label": "Use Custom Font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "button_font",
+      "label": "Font Family",
+      "default": "assistant_n6"
+    },
+    {
+      "type": "range",
+      "id": "button_size",
+      "min": 10,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Font Size",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "button_size_mobile",
+      "min": 10,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Font Size - Mobile",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "button_weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "label": "Font Weight",
+      "default": 600
+    },
+    {
+      "type": "range",
+      "id": "button_height",
+      "min": 50,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Line Height",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "button_ml",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "label": "Left Margin",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "button_padding_vertical",
+      "min": 5,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Vertical",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "button_padding_horizontal",
+      "min": 10,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Horizontal",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "button_radius",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Border Radius",
+      "default": 25
+    },
+    {
+      "type": "range",
+      "id": "button_border_thickness",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "unit": "px",
+      "label": "Border Thickness",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "label": "Header Text",
+      "id": "text_color",
+      "default": "#E6F0FF"
+    },
+    {
+      "type": "color",
+      "label": "Countdown Numbers",
+      "id": "countdown_number_color",
+      "default": "#A5D8FF"
+    },
+    {
+      "type": "color",
+      "label": "Countdown Labels",
+      "id": "countdown_labels_color",
+      "default": "#64B5F6"
+    },
+    {
+      "type": "color",
+      "label": "Button Text",
+      "id": "button_color",
+      "default": "#0B132B"
+    },
+    {
+      "type": "color",
+      "label": "Button Text (Hover)",
+      "id": "button_hover_color",
+      "default": "#132A45"
+    },
+    {
+      "type": "color",
+      "label": "Button Background",
+      "id": "button_bg_color",
+      "default": "#4EA8DE"
+    },
+    {
+      "type": "color",
+      "label": "Button Background (Hover)",
+      "id": "button_bg_hover_color",
+      "default": "#3B82F6"
+    },
+    {
+      "type": "color",
+      "label": "Button Border",
+      "id": "button_border_color",
+      "default": "#1B6FA8"
+    },
+    {
+      "type": "color",
+      "label": "Button Border (Hover)",
+      "id": "button_border_hover_color",
+      "default": "#155E9C"
+    },
+    {
+      "type": "color",
+      "label": "Section Background",
+      "id": "background_color",
+      "default": "#0A192F"
+    },
+    {
+      "type": "color_background",
+      "id": "background_gradient",
+      "label": "Section Gradient",
+      "default": "linear-gradient(135deg, rgba(10, 25, 47, 1), rgba(17, 94, 140, 1) 100%)"
+    },
+    {
+      "type": "color",
+      "label": "Section Border",
+      "id": "border_color",
+      "default": "#1E3A8A"
+    },
+    {
+      "type": "header",
+      "content": "Layout & Spacing"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top Margin",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom Margin",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal",
+      "min": 0,
+      "max": 10,
+      "step": 0.5,
+      "unit": "rem",
+      "label": "Side Padding",
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal_mobile",
+      "min": 0,
+      "max": 5,
+      "step": 0.5,
+      "unit": "rem",
+      "label": "Side Padding - Mobile",
+      "default": 1.5
+    },
+    {
+      "type": "range",
+      "id": "border_thickness",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "label": "Border Thickness",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "VSO - Countdown Header 01"
+    }
+  ]
+}
+  {% endschema %}
+  

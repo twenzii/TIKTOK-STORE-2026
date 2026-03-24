@@ -1,0 +1,759 @@
+{% comment %}
+WARNING: UNAUTHORIZED MODIFICATION PROHIBITED
+This code is proprietary property of Versio Studio. Any unauthorized tampering, 
+alteration, or distribution of this file is strictly forbidden and will be prosecuted to the maximum extent permitted by law.
+All modifications are logged.
+
+If you require assistance or have questions regarding this code, please contact support@versio.studio.
+{% endcomment %}
+
+{% style %}
+.versio-gallery-badge-{{ section.id }} .versio-section *,
+.versio-gallery-badge-{{ section.id }} .versio-section *::after,
+.versio-gallery-badge-{{ section.id }} .versio-section *::before {
+  box-sizing: border-box;
+}
+
+.versio-gallery-badge-{{ section.id }} > .versio-gallery-badge-content-{{ section.id }}  > p{
+  margin-bottom: 0px !important;
+  margin-top: 8px !important;
+}
+
+.versio-gallery-badge-{{ section.id }}.versio-section {
+  display: flex;
+  max-width: 100%;
+  clear: both;
+}
+
+.versio-gallery-badge-{{ section.id }} .versio-section_container,
+.versio-gallery-badge-{{ section.id }} .versio-section_content {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.versio-gallery-badge-{{ section.id }} .versio-section_content {
+  padding: 0 15px;
+}
+
+.versio-gallery-badge-{{ section.id }} .versio-section_container {
+  background-size: cover !important;
+  background-position: center !important;
+  background-attachment: unset !important;
+}
+
+{{ section.settings.title_font | font_face: font_display: 'swap' }}
+{{ section.settings.description_font | font_face: font_display: 'swap' }}
+  
+.versio-gallery-badge-{{ section.id }} {
+  width: 100%;
+  border: solid {{ section.settings.border_color }} {{ section.settings.border_width }}px;
+  border-radius: {{ section.settings.border_radius }}px;
+  margin-top: {{ section.settings.margin_top | times: 0.75 | round: 0 }}px;
+  background-color: {{ section.settings.background_color }};
+  background-image: {{ section.settings.background_gradient }};
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: {{ section.settings.padding_top_mobile }}px {{ section.settings.padding_horizontal_mobile }}px {{ section.settings.padding_bottom_mobile }}px;
+  box-sizing: border-box;
+  max-width: 100%;
+  flex-wrap: nowrap;
+}
+
+.versio-gallery-badge-container-{{ section.id }} {
+  width: 100%;
+  display: block;
+  clear: both;
+  float: none;
+  position: relative;
+  margin-bottom: 20px;
+  z-index: 5; 
+}
+
+.versio-gallery-badge-image-{{ section.id }} {
+  flex: 0 0 {{ section.settings.image_width_mobile }}px;
+  width: {{ section.settings.image_width_mobile }}px;
+  height: {{ section.settings.image_height_mobile }}px;
+  margin-right: {{ section.settings.image_spacing_mobile }}px;
+}
+
+.versio-gallery-badge-image-{{ section.id }} > img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.versio-gallery-badge-content-{{ section.id }} {
+  flex: 1;
+}
+
+.versio-gallery-badge-title-{{ section.id }} {
+  margin: 0 0 {{ section.settings.title_spacing_mobile }}px 0;
+  font-size: {{ section.settings.title_size_mobile }}px;
+  color: {{ section.settings.title_color }};
+  line-height: {{ section.settings.title_line_height }}%;
+  font-weight: {{ section.settings.title_weight }};
+}
+
+.versio-gallery-badge-description-{{ section.id }} {
+  margin: 0;
+  font-size: {{ section.settings.description_size_mobile }}px;
+  color: {{ section.settings.description_color }};
+  line-height: {{ section.settings.description_line_height }}%;
+  font-weight: {{ section.settings.description_weight }};
+}
+
+@media (min-width: 768px) {
+  .versio-gallery-badge-{{ section.id }} {
+    margin-top: {{ section.settings.margin_top }}px;
+    padding: {{ section.settings.padding_top }}px {{ section.settings.padding_horizontal }}px {{ section.settings.padding_bottom }}px;
+  }
+  
+  .versio-gallery-badge-image-{{ section.id }} {
+    flex: 0 0 {{ section.settings.image_width }}px;
+    width: {{ section.settings.image_width }}px;
+    height: {{ section.settings.image_height }}px;
+    margin-right: {{ section.settings.image_spacing }}px;
+  }
+  
+  .versio-gallery-badge-title-{{ section.id }} {
+    margin: 0 0 {{ section.settings.title_spacing }}px 0;
+    font-size: {{ section.settings.title_size }}px;
+  }
+  
+  .versio-gallery-badge-description-{{ section.id }} {
+    font-size: {{ section.settings.description_size }}px;
+    margin-bottom: 0px;
+  }
+}
+
+.vso-node {
+  display: none;
+}
+.vso-node--v2 {
+  display: block;
+}
+
+.product-has-badge-{{ section.id }} .product__media-wrapper,
+.product-has-badge-{{ section.id }} .product-gallery,
+.product-has-badge-{{ section.id }} .product-media,
+.product-has-badge-{{ section.id }} .product-images,
+.product-has-badge-{{ section.id }} .product-single__media-group,
+.product-has-badge-{{ section.id }} .product-single__photos,
+.product-has-badge-{{ section.id }} [data-product-images],
+.product-has-badge-{{ section.id }} .product-gallery--media-wrapper,
+.product-has-badge-{{ section.id }} .product-single__photo-wrapper {
+  position: relative !important;
+  max-height: unset !important;
+  overflow: visible !important;
+}
+
+.product-has-badge-{{ section.id }} .product__media-wrapper.is-sticky,
+.product-has-badge-{{ section.id }} .product-gallery.is-sticky,
+.product-has-badge-{{ section.id }} .product-media.is-sticky,
+.product-has-badge-{{ section.id }} .product-images.is-sticky,
+.product-has-badge-{{ section.id }} .product-single__media-group.is-sticky,
+.product-has-badge-{{ section.id }} [data-media-group].is-sticky,
+.product-has-badge-{{ section.id }} [data-product-images].is-sticky,
+.product-has-badge-{{ section.id }} .product-gallery--media-wrapper.is-sticky,
+.product-has-badge-{{ section.id }} .product-single__photo-wrapper.is-sticky,
+.product-has-badge-{{ section.id }} [data-sticky-media-container] {
+  position: relative !important;
+  top: auto !important;
+  height: auto !important;
+}
+{% endstyle %}
+
+{% if section.settings.title_custom %}
+<style>
+  .versio-gallery-badge-title-{{ section.id }} {
+    font-family: {{ section.settings.title_font.family }}, {{ section.settings.title_font.fallback_families }};
+    font-weight: {{ section.settings.title_font.weight }};
+    font-style: {{ section.settings.title_font.style }};
+  }
+</style>
+{% endif %}
+
+{% if section.settings.description_custom %}
+<style>
+  .versio-gallery-badge-description-{{ section.id }} {
+    font-family: {{ section.settings.description_font.family }}, {{ section.settings.description_font.fallback_families }};
+    font-weight: {{ section.settings.description_font.weight }};
+    font-style: {{ section.settings.description_font.style }};
+    margin-bottom: 0px;
+  }
+</style>
+{% endif %}
+
+<script>
+  (function() {
+    function positionGalleryBadge() {
+      const gallerySelectors = [
+        '.product-single__media-group',
+        '.product__media-wrapper',
+        '.product-single__photos',
+        '.product-images',
+        '.product-gallery',
+        '.product-media',
+        '.product__photos',
+        '[data-product-images]',
+        '.product-gallery--media-wrapper',
+        '.product-single__photo-wrapper'
+      ];
+      
+      let galleryElement = null;
+      for (const selector of gallerySelectors) {
+        const element = document.querySelector(selector);
+        if (element) {
+          galleryElement = element;
+          break;
+        }
+      }
+
+      const template = document.querySelector('#versio-gallery-badge-{{ section.id }}');
+      if (!template) return;
+
+      const existingBadgeContainer = document.querySelector('.versio-gallery-badge-container-{{ section.id }}');
+      if (existingBadgeContainer) {
+         adjustStickyGallery();
+         return; 
+      }
+
+      const mobilePlacementTarget = document.querySelector('[data-versio-badge-mobile-placement]');
+      const isMobile = window.innerWidth < 768; 
+
+      const badgeContainer = document.createElement('div');
+      badgeContainer.className = 'versio-gallery-badge-container-{{ section.id }}';
+      const templateContent = template.content.cloneNode(true);
+      badgeContainer.appendChild(templateContent.firstElementChild);
+
+      let placementSuccessful = false;
+      if (isMobile && mobilePlacementTarget) {
+        mobilePlacementTarget.appendChild(badgeContainer);
+        badgeContainer.style.cssText = 'display: block !important; width: 100% !important; margin-bottom: 20px !important;'; // Add some default spacing
+        placementSuccessful = true;
+      } else if (galleryElement) {
+        const productInfo = document.querySelector('.product__info-wrapper, .product-single__meta, .product-information');
+        const productContainer = document.querySelector('.product, .product-container, .product-single, .product__content');
+        const isProductGrid = productInfo && 
+                             window.getComputedStyle(productInfo).getPropertyValue('display').includes('flex') || 
+                             (productContainer && window.getComputedStyle(productContainer).getPropertyValue('display').includes('flex'));
+        
+        if (productContainer) {
+          productContainer.classList.add('product-has-badge-{{ section.id }}');
+        } else {
+          document.body.classList.add('product-has-badge-{{ section.id }}');
+        }
+
+        galleryElement.appendChild(badgeContainer);
+        badgeContainer.style.cssText = 'display: block !important; width: 100% !important; clear: both !important; float: none !important; position: relative !important; z-index: 5 !important;';
+        placementSuccessful = true;
+
+      } else {
+        console.warn("Versio Gallery Badge: Could not find gallery element or mobile placement target.");
+        return; 
+      }
+      
+      if(placementSuccessful){
+          setTimeout(() => {
+            const actualBadge = badgeContainer.querySelector('.versio-gallery-badge-{{ section.id }}');
+            if (actualBadge) {
+              if (!(isMobile && mobilePlacementTarget)) {
+                  badgeContainer.style.cssText = 'display: block !important; width: 100% !important; clear: both !important; float: none !important; position: relative !important; z-index: 5 !important;';
+              }
+              adjustStickyGallery(); 
+            }
+          }, 50); 
+      }
+    }
+    
+    function adjustStickyGallery() {
+      if (!document.querySelector('.product-has-badge-{{ section.id }}')) return;
+
+      const stickySelectors = [
+        '.product__media-wrapper',
+        '.product-gallery',
+        '.product-media',
+        '.product-images',
+        '.product-single__media-group',
+        '[data-sticky-media-container]',
+        '[data-media-group]'
+      ];
+      
+      stickySelectors.forEach(selector => {
+        const element = document.querySelector(selector);
+        if (element) {
+          const position = window.getComputedStyle(element).position;
+          if (position === 'sticky' || position === 'fixed') {
+            element.classList.add('is-sticky');
+            
+             const badge = document.querySelector('.versio-gallery-badge-container-{{ section.id }}');
+             if(badge && element.contains(badge)) { // Check if badge is INSIDE sticky element
+                 let badgeObserver = new IntersectionObserver((entries) => {
+                   entries.forEach(entry => {
+                     if (entry.isIntersecting) {
+        
+                     } else {
+          
+                     }
+                   });
+                 }, {
+                   threshold: 0.1, 
+                   rootMargin: '-10px 0px 0px 0px' 
+                 });
+                 element.style.position = 'relative'; 
+                 element.style.top = 'auto';
+            } else if (badge && !element.contains(badge)) {
+
+                 element.style.position = ''; 
+                 element.style.top = '';
+            }
+          }
+        }
+      });
+    }
+    
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', positionGalleryBadge);
+    } else {
+      requestAnimationFrame(positionGalleryBadge);
+    }
+    
+    document.addEventListener('shopify:section:load', positionGalleryBadge);
+    document.addEventListener('shopify:section:select', positionGalleryBadge); 
+    document.addEventListener('shopify:section:deselect', () => {
+    });
+    document.addEventListener('shopify:block:select', positionGalleryBadge); 
+    document.addEventListener('shopify:block:deselect', positionGalleryBadge);
+
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        const existingBadge = document.querySelector('.versio-gallery-badge-container-{{ section.id }}');
+        if(existingBadge) existingBadge.remove();
+        positionGalleryBadge();
+      }, 250);
+    });
+
+
+
+  })();
+</script>
+
+<template id="versio-gallery-badge-{{ section.id }}">
+  <div class="versio-gallery-badge-{{ section.id }} versio-section vso-node">
+    {% if section.settings.image != blank %}
+      <div class="versio-gallery-badge-image-{{ section.id }}">
+        <img src="{{ section.settings.image | image_url }}" alt="{{ section.settings.image.alt | default: section.settings.title }}" loading="lazy" width="{{ section.settings.image_width }}" height="{{ section.settings.image_height }}">
+      </div>
+    {% endif %}
+    
+    <div class="versio-gallery-badge-content-{{ section.id }}">
+      {% if section.settings.title != blank %}
+        <h3 class="versio-gallery-badge-title-{{ section.id }}">{{ section.settings.title }}</h3>
+      {% endif %}
+      
+      {% if section.settings.description != blank %}
+        <p class="versio-gallery-badge-description-{{ section.id }}">{{ section.settings.description }}</p>
+      {% endif %}
+    </div>
+  </div>
+</template>
+
+{% schema %}
+{
+  "name": "VSO - Sticky Image Badge",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "⚠️ Disable Sticky Content",
+      "info": "Click on 'Product Information' section and disable 'Sticky content' checkbox."
+    },
+    {
+      "type": "header",
+      "content": "Mobile Placement (Optional)",
+      "info": "To control the badge position specifically on mobile, add a 'Custom Liquid' block to your product information section and paste this code inside: <div data-versio-badge-mobile-placement></div>"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Badge Image"
+    },
+    {
+      "type": "header",
+      "content": "Image Settings"
+    },
+    {
+      "type": "range",
+      "id": "image_width",
+      "min": 30,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Image Width",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "image_width_mobile",
+      "min": 30,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "label": "Image Width Mobile",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "image_height",
+      "min": 30,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Image Height",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "image_height_mobile",
+      "min": 30,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "label": "Image Height Mobile",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "image_spacing",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "label": "Image Right Spacing",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "image_spacing_mobile",
+      "min": 0,
+      "max": 30,
+      "step": 5,
+      "unit": "px",
+      "label": "Image Right Spacing Mobile",
+      "default": 15
+    },
+    {
+      "type": "header",
+      "content": "Title Settings"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "100 Nights Risk-Free Trial"
+    },
+    
+    {
+      "type": "checkbox",
+      "id": "title_custom",
+      "label": "Use Custom Font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "title_font",
+      "label": "Title Font",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "select",
+      "id": "title_weight",
+      "label": "Title Font Weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Regular"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semibold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "min": 12,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "label": "Title Font Size",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "title_size_mobile",
+      "min": 12,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Title Font Size Mobile",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "title_line_height",
+      "min": 100,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Title Line Height",
+      "default": 130
+    },
+    {
+      "type": "range",
+      "id": "title_spacing",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "label": "Title Bottom Spacing",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "title_spacing_mobile",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "label": "Title Bottom Spacing Mobile",
+      "default": 6
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Description Settings"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "We stand by our quality and guarantee your satisfaction."
+    },
+    {
+      "type": "checkbox",
+      "id": "description_custom",
+      "label": "Use Custom Font",
+      "default": false
+    },
+    {
+      "type": "font_picker",
+      "id": "description_font",
+      "label": "Description Font",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "select",
+      "id": "description_weight",
+      "label": "Description Font Weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Regular"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semibold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Description Font Size",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "description_size_mobile",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Description Font Size Mobile",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "description_line_height",
+      "min": 100,
+      "max": 200,
+      "step": 10,
+      "unit": "%",
+      "label": "Description Line Height",
+      "default": 150
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description Color",
+      "default": "#333333"
+    },
+    {
+      "type": "header",
+      "content": "Style Settings"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#F7F7F7"
+    },
+    {
+      "type": "color_background",
+      "id": "background_gradient",
+      "label": "Background Gradient"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Border Radius",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "label": "Border Width",
+      "default": 1
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border Color",
+      "default": "#F7F7F7"
+    },
+    {
+      "type": "header",
+      "content": "Spacing Settings"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Top Margin",
+      "default": 20,
+      "info": "Space between gallery and badge"
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Horizontal Padding",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal_mobile",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "label": "Horizontal Padding Mobile",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 30,
+      "step": 5,
+      "unit": "px",
+      "label": "Top Padding Mobile",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 30,
+      "step": 5,
+      "unit": "px",
+      "label": "Bottom Padding Mobile",
+      "default": 15
+    }
+  ],
+  "presets": [
+    {
+      "name": "VSO - Sticky Image Badge",
+      "category": "Custom Content"
+    }
+  ]
+}
+{% endschema %}

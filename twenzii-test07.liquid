@@ -1,0 +1,2479 @@
+{%- liquid
+  assign bg_color = section.settings.color_background
+  assign scroll_speed_desktop = section.settings.scroll_speed_desktop
+  assign scroll_speed_mobile = section.settings.scroll_speed_mobile
+  assign card_max_width = section.settings.card_max_width
+  assign card_max_width_mobile = section.settings.card_max_width_mobile
+  assign card_gap = section.settings.card_gap
+  assign layout = section.settings.layout
+-%}
+
+<style>
+  .vso-testimonials-07__wrapper {
+    background-color: {{ bg_color }};
+    padding: {{ section.settings.padding_top_desktop }}px 0 {{ section.settings.padding_bottom_desktop }}px;
+  }
+
+  .vso-testimonials-07__container {
+    max-width: {% unless section.settings.section_full_width %}{{ section.settings.section_max_width }}rem{% else %}100%{% endunless %};
+    margin: 0 auto;
+    padding: 0 {{ section.settings.padding_horizontal }}rem;
+  }
+
+  .vso-testimonials-07__header {
+    text-align: center;
+    margin-bottom: {{ section.settings.content_testimonial_gap }}px;
+    max-width: {{ section.settings.text_container_max_width }}px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .vso-testimonials-07__header--horizontal {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: {{ section.settings.content_testimonial_gap }}px;
+    align-items: center;
+    text-align: left;
+    margin-bottom: {{ section.settings.content_testimonial_gap }}px;
+    max-width: none;
+  }
+
+  .vso-testimonials-07__header--horizontal .vso-testimonials-07__subtitle {
+    justify-content: flex-start;
+  }
+
+  .vso-testimonials-07__subtitle {
+    margin: 0 0 {{ section.settings.subtitle_margin_bottom }}px 0;
+    font-size: {{ section.settings.subtitle_size_desktop }}px;
+    color: {{ section.settings.subtitle_color }};
+    font-weight: {{ section.settings.subtitle_font_weight }};
+    line-height: {{ section.settings.subtitle_line_height }}%;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background-color: {{ section.settings.subtitle_bg_color }};
+    padding: {{ section.settings.subtitle_padding_vertical }}px {{ section.settings.subtitle_padding_horizontal }}px;
+    border-radius: {{ section.settings.subtitle_border_radius }}px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: {{ section.settings.subtitle_dot_spacing }}px;
+  }
+
+  .vso-testimonials-07__subtitle-dot {
+    width: {{ section.settings.subtitle_dot_size }}px;
+    height: {{ section.settings.subtitle_dot_size }}px;
+    background-color: {{ section.settings.subtitle_dot_color }};
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: inline-block;
+    {% if section.settings.enable_subtitle_dot_pulse %}
+      -webkit-animation: vso-pulse-{{ section.id }} 2s infinite;
+      animation: vso-pulse-{{ section.id }} 2s infinite;
+    {% endif %}
+  }
+
+  .vso-node {
+    display: none;
+  }
+  .vso-node--v2 {
+    display: block;
+  }
+
+  {% if section.settings.enable_subtitle_dot_pulse %}
+    @-webkit-keyframes vso-pulse-{{ section.id }} {
+      0% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 0.4;
+        transform: scale(1.5);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+    @keyframes vso-pulse-{{ section.id }} {
+      0% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 0.4;
+        transform: scale(1.5);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+  {% endif %}
+
+  .vso-testimonials-07__title {
+    margin: 0 0 {{ section.settings.title_margin_bottom }}px 0;
+    font-size: {{ section.settings.title_size_desktop }}px;
+    color: {{ section.settings.title_color }};
+    font-weight: {{ section.settings.title_font_weight }};
+    line-height: {{ section.settings.title_line_height }}%;
+  }
+
+  .vso-testimonials-07__description {
+    margin: 0 0 {{ section.settings.description_margin_bottom }}px 0;
+    font-size: {{ section.settings.description_size_desktop }}px;
+    color: {{ section.settings.description_color }};
+    font-weight: {{ section.settings.description_font_weight }};
+    line-height: {{ section.settings.description_line_height }}%;
+  }
+
+  .vso-testimonials-07__stats {
+    display: flex;
+    justify-content: {{ section.settings.stats_alignment_desktop }};
+    gap: {{ section.settings.stats_gap }}px;
+    margin-top: {{ section.settings.stats_margin_top }}px;
+  }
+
+  .vso-testimonials-07__stat {
+    text-align: {{ section.settings.stat_numbers_alignment_desktop }};
+    position: relative;
+  }
+
+  .vso-testimonials-07__stat:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: calc(-{{ section.settings.stats_gap }}px / 2);
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 40px;
+    background-color: {{ section.settings.stat_divider_color }};
+  }
+
+  .vso-testimonials-07__stat-number {
+    margin: 0 0 4px 0;
+    font-size: {{ section.settings.stat_number_size_desktop }}px;
+    color: {{ section.settings.stat_number_color }};
+    font-weight: {{ section.settings.stat_number_font_weight }};
+    line-height: 1.2;
+  }
+
+  .vso-testimonials-07__stat-label {
+    margin: 0;
+    font-size: {{ section.settings.stat_label_size_desktop }}px;
+    color: {{ section.settings.stat_label_color }};
+    font-weight: {{ section.settings.stat_label_font_weight }};
+    line-height: 1.3;
+  }
+
+  .vso-testimonials-07__testimonials-wrapper {
+    overflow: hidden;
+    position: relative;
+    padding: 20px;
+    margin: -20px;
+  }
+
+  .vso-testimonials-07__testimonials-wrapper::before,
+  .vso-testimonials-07__testimonials-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100px;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .vso-testimonials-07__testimonials-wrapper::before {
+    left: 0;
+    background: linear-gradient(to right, {{ bg_color }}, transparent);
+  }
+
+  .vso-testimonials-07__testimonials-wrapper::after {
+    right: 0;
+    background: linear-gradient(to left, {{ bg_color }}, transparent);
+  }
+
+  .vso-testimonials-07__scroll-container {
+    display: flex;
+    align-items: flex-start;
+    gap: {{ card_gap }}px;
+    animation: vso-scroll-{{ section.id }} {{ scroll_speed_desktop }}s linear infinite;
+    will-change: transform;
+    flex-wrap: nowrap;
+  }
+
+  .vso-testimonials-07__scroll-container:hover {
+    animation-play-state: paused;
+  }
+
+  .vso-testimonials-07__testimonial-card {
+    background-color: {{ section.settings.testimonial_bg_color }};
+    border-radius: {{ section.settings.testimonial_border_radius }}px;
+    padding: {{ section.settings.testimonial_padding }}px;
+    {% if section.settings.enable_testimonial_shadow %}
+      box-shadow: {{ section.settings.testimonial_shadow_color | color_modify: 'alpha', 0.15 }} 0px 4px 12px;
+    {% endif %}
+    border: {{ section.settings.testimonial_border_width }}px solid {{ section.settings.testimonial_border_color }};
+    flex-shrink: 0;
+    width: {{ card_max_width }}px;
+    position: relative;
+  }
+
+  .vso-testimonials-07__stars {
+    display: flex;
+    flex-direction: row;
+    gap: {{ section.settings.star_gap }}px;
+    font-size: {{ section.settings.star_size_desktop }}px;
+    margin: 0 0 {{ section.settings.stars_margin_bottom }}px 0;
+    margin-top: -12px;
+    color: {{ section.settings.star_color }};
+  }
+
+  .vso-testimonials-07__testimonial-title {
+    margin: 0 0 {{ section.settings.testimonial_title_margin_bottom }}px 0;
+    font-size: {{ section.settings.testimonial_title_size_desktop }}px;
+    color: {{ section.settings.testimonial_title_color }};
+    font-weight: {{ section.settings.testimonial_title_font_weight }};
+    line-height: {{ section.settings.testimonial_title_line_height }}%;
+  }
+
+  .vso-testimonials-07__testimonial-text {
+    margin: 0 0 {{ section.settings.testimonial_content_margin_bottom }}px 0;
+    font-size: {{ section.settings.testimonial_content_size_desktop }}px;
+    color: {{ section.settings.testimonial_content_color }};
+    font-weight: {{ section.settings.testimonial_content_font_weight }};
+    line-height: {{ section.settings.testimonial_content_line_height }}%;
+  }
+
+  .vso-testimonials-07__author {
+    display: flex;
+    align-items: center;
+    gap: {{ section.settings.author_gap }}px;
+    margin-top: 16px;
+  }
+
+  .vso-testimonials-07__author-avatar {
+    width: {{ section.settings.avatar_size_desktop }}px;
+    height: {{ section.settings.avatar_size_desktop }}px;
+    border-radius: 50%;
+    background-color: {{ section.settings.avatar_bg_color }};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: {{ section.settings.avatar_text_size_desktop }}px;
+    font-weight: 600;
+    color: {{ section.settings.avatar_text_color }};
+    flex-shrink: 0;
+  }
+
+  .vso-testimonials-07__author-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .vso-testimonials-07__author-info {
+    flex: 1;
+  }
+
+  .vso-testimonials-07__author-name {
+    margin: 0 0 2px 0;
+    font-size: {{ section.settings.author_name_size_desktop }}px;
+    color: {{ section.settings.author_name_color }};
+    font-weight: {{ section.settings.author_name_font_weight }};
+    line-height: 1.2;
+  }
+
+  .vso-testimonials-07__author-location {
+    margin: 0;
+    font-size: {{ section.settings.author_location_size_desktop }}px;
+    color: {{ section.settings.author_location_color }};
+    font-weight: {{ section.settings.author_location_font_weight }};
+    line-height: 1.2;
+  }
+
+  .vso-testimonials-07__author-date {
+    position: absolute;
+    top: {{ section.settings.testimonial_padding }}px;
+    right: {{ section.settings.testimonial_padding }}px;
+    font-size: {{ section.settings.author_date_size_desktop }}px;
+    color: {{ section.settings.author_date_color }};
+    font-weight: {{ section.settings.author_date_font_weight }};
+    background-color: {{ section.settings.date_bg_color }};
+    padding: {{ section.settings.date_padding_vertical }}px {{ section.settings.date_padding_horizontal }}px;
+    border-radius: {{ section.settings.date_border_radius }}px;
+    line-height: 1;
+  }
+
+  @keyframes vso-scroll-{{ section.id }} {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(calc(-1 * var(--scroll-width, 50%)));
+    }
+  }
+
+  @media (max-width: 768px) {
+    .vso-testimonials-07__scroll-container {
+      animation: none;
+    }
+
+    .vso-testimonials-07__scroll-container.scrolling {
+      animation: vso-scroll-mobile-{{ section.id }} linear infinite;
+      animation-duration: var(--scroll-duration, {{ scroll_speed_mobile }}s);
+    }
+
+    .vso-testimonials-07__testimonials-wrapper {
+      margin: -20px 0;
+      padding: 20px 0;
+      overflow: hidden;
+    }
+  }
+
+  @keyframes vso-scroll-mobile-{{ section.id }} {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(calc(-1 * var(--scroll-width)));
+    }
+  }
+
+    .vso-testimonials-07__wrapper {
+      padding: {{ section.settings.padding_top_mobile }}px 0 {{ section.settings.padding_bottom_mobile }}px;
+    }
+
+    .vso-testimonials-07__container {
+      padding: 0 {{ section.settings.padding_horizontal_mobile }}rem;
+    }
+
+    .vso-testimonials-07__subtitle {
+      font-size: {{ section.settings.subtitle_size_mobile }}px;
+    }
+
+    .vso-testimonials-07__title {
+      font-size: {{ section.settings.title_size_mobile }}px;
+    }
+
+    .vso-testimonials-07__description {
+      font-size: {{ section.settings.description_size_mobile }}px;
+    }
+
+    .vso-testimonials-07__stats {
+      justify-content: {{ section.settings.stats_alignment_mobile }};
+      flex-wrap: nowrap;
+    }
+
+    .vso-testimonials-07__stat {
+      text-align: {{ section.settings.stat_numbers_alignment_mobile }};
+      flex: 1;
+      min-width: 0;
+    }
+
+    .vso-testimonials-07__stat-number {
+      font-size: {{ section.settings.stat_number_size_mobile }}px;
+    }
+
+    .vso-testimonials-07__stat-label {
+      font-size: {{ section.settings.stat_label_size_mobile }}px;
+    }
+
+    .vso-testimonials-07__testimonial-card {
+      width: {{ card_max_width_mobile }}px;
+    }
+
+    .vso-testimonials-07__stars {
+      font-size: {{ section.settings.star_size_mobile }}px;
+    }
+
+    .vso-testimonials-07__testimonial-title {
+      font-size: {{ section.settings.testimonial_title_size_mobile }}px;
+    }
+
+    .vso-testimonials-07__testimonial-text {
+      font-size: {{ section.settings.testimonial_content_size_mobile }}px;
+    }
+
+    .vso-testimonials-07__author-avatar {
+      width: {{ section.settings.avatar_size_mobile }}px;
+      height: {{ section.settings.avatar_size_mobile }}px;
+      font-size: {{ section.settings.avatar_text_size_mobile }}px;
+    }
+
+    .vso-testimonials-07__author-name {
+      font-size: {{ section.settings.author_name_size_mobile }}px;
+    }
+
+    .vso-testimonials-07__author-location {
+      font-size: {{ section.settings.author_location_size_mobile }}px;
+    }
+
+    .vso-testimonials-07__author-date {
+      font-size: {{ section.settings.author_date_size_mobile }}px;
+    }
+
+    .vso-testimonials-07__header--horizontal {
+      grid-template-columns: 1fr;
+      gap: 40px;
+      text-align: center;
+    }
+
+    .vso-testimonials-07__header--horizontal .vso-testimonials-07__subtitle {
+      justify-content: center;
+    }
+  }
+</style>
+
+<div class="vso-testimonials-07__wrapper vso-node">
+  <div class="vso-testimonials-07__container">
+    {%- if layout == 'horizontal' -%}
+      <div class="vso-testimonials-07__header vso-testimonials-07__header--horizontal">
+        <div class="vso-testimonials-07__text-content">
+          {%- if section.settings.subtitle != blank -%}
+            <div class="vso-testimonials-07__subtitle">
+              {%- if section.settings.show_subtitle_dot -%}
+                <span class="vso-testimonials-07__subtitle-dot"></span>
+              {%- endif -%}
+              {{ section.settings.subtitle }}
+            </div>
+          {%- endif -%}
+
+          {%- if section.settings.title != blank -%}
+            <h2 class="vso-testimonials-07__title">{{ section.settings.title }}</h2>
+          {%- endif -%}
+
+          {%- if section.settings.description != blank -%}
+            <div class="vso-testimonials-07__description">{{ section.settings.description }}</div>
+          {%- endif -%}
+
+          {%- if section.settings.show_stats -%}
+            <div class="vso-testimonials-07__stats">
+              {%- if section.settings.stat_1_number != blank -%}
+                <div class="vso-testimonials-07__stat">
+                  <div class="vso-testimonials-07__stat-number">{{ section.settings.stat_1_number }}</div>
+                  <div class="vso-testimonials-07__stat-label">{{ section.settings.stat_1_label }}</div>
+                </div>
+              {%- endif -%}
+
+              {%- if section.settings.stat_2_number != blank -%}
+                <div class="vso-testimonials-07__stat">
+                  <div class="vso-testimonials-07__stat-number">{{ section.settings.stat_2_number }}</div>
+                  <div class="vso-testimonials-07__stat-label">{{ section.settings.stat_2_label }}</div>
+                </div>
+              {%- endif -%}
+
+              {%- if section.settings.stat_3_number != blank -%}
+                <div class="vso-testimonials-07__stat">
+                  <div class="vso-testimonials-07__stat-number">{{ section.settings.stat_3_number }}</div>
+                  <div class="vso-testimonials-07__stat-label">{{ section.settings.stat_3_label }}</div>
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        </div>
+
+        <div class="vso-testimonials-07__testimonials-wrapper">
+          <div class="vso-testimonials-07__scroll-container">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'testimonial' -%}
+                <div class="vso-testimonials-07__testimonial-card">
+                  {%- if block.settings.show_stars -%}
+                    <div class="vso-testimonials-07__stars">
+                      {%- liquid
+                        assign rating = block.settings.star_rating
+                        assign full_stars = rating | floor
+                        assign half_star = rating | modulo: 1
+                        assign empty_stars = 5 | minus: full_stars
+                        if half_star >= 0.5
+                          assign empty_stars = empty_stars | minus: 1
+                        endif
+                      -%}
+                      
+                      {% for i in (1..full_stars) %}
+                        {% case section.settings.star_icon %}
+                          {% when 'star1' %}
+                            <span class="star star-filled">
+                              <svg viewBox="-2.4 -2.4 28.80 28.80" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="1em" height="1em"><g stroke-width="0" transform="translate(1.2,1.2), scale(0.9)"><rect x="-2.4" y="-2.4" width="28.80" height="28.80" rx="2.88" fill="{{ section.settings.star_bg_color }}"></rect></g><g> <rect x="0" fill="none" width="24" height="24"></rect> <g> <path d="M12 2l2.582 6.953L22 9.257l-5.822 4.602L18.18 21 12 16.89 5.82 21l2.002-7.14L2 9.256l7.418-.304"></path> </g> </g></svg>
+                            </span>
+                          {% when 'star2' %}
+                            <span class="star star-filled">
+                              <svg width="1em" height="1em" viewBox="0 0 425.305 425.305" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><g><g><g><path style="fill:{{ section.settings.star_bg_color }};" d="M47.781,0v329.743h103.74l61.132,95.562l61.142-95.562h103.73V0H47.781z"></path><path style="fill:currentColor;" d="M267.16,179.732 l12.858,75.045l-67.375-35.427l-67.385,35.427l12.867-75.045l-54.518-53.14l75.338-10.952l33.697-68.274l33.688,68.274 l75.338,10.952L267.16,179.732z"></path></g></g></g></svg>
+                            </span>
+                          {% when 'star3' %}
+                            <span class="star star-filled">
+                              <svg width="1em" height="1em" viewBox="0 0 1200 1200" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><circle cx="600" cy="600" r="600" fill="{{ section.settings.star_bg_color }}"/><path d="M603.955,209.912l94.556,295.239l309.889,6.958L756.812,693.164l89.136,296.924 L595.972,806.763L341.162,983.35l97.119-294.434l-246.68-187.793l310.034,1.392L603.955,209.912L603.955,209.912z" fill="currentColor"></path></svg>
+                            </span>
+                          {% else %}
+                            <span class="star star-filled">★</span>
+                        {% endcase %}
+                      {% endfor %}
+                      
+                      {% if half_star >= 0.5 %}
+                        {% case section.settings.star_icon %}
+                          {% when 'star1' %}
+                            <span class="star star-half">
+                              <svg viewBox="-2.4 -2.4 28.80 28.80" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em">
+                                <defs>
+                                  <linearGradient id="half-bg-07-{{ block.id }}" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="50%" style="stop-color:{{ section.settings.star_bg_color }};stop-opacity:1" />
+                                    <stop offset="50%" style="stop-color:{{ section.settings.star_empty_color }};stop-opacity:1" />
+                                  </linearGradient>
+                                </defs>
+                                <g stroke-width="0" transform="translate(1.2,1.2), scale(0.9)"><rect x="-2.4" y="-2.4" width="28.80" height="28.80" rx="2.88" fill="url(#half-bg-07-{{ block.id }})"></rect></g>
+                                <g> <rect x="0" fill="none" width="24" height="24"></rect> <g> <path d="M12 2l2.582 6.953L22 9.257l-5.822 4.602L18.18 21 12 16.89 5.82 21l2.002-7.14L2 9.256l7.418-.304" fill="currentColor"></path> </g> </g>
+                              </svg>
+                            </span>
+                          {% when 'star2' %}
+                            <span class="star star-half">
+                              <svg width="1em" height="1em" viewBox="0 0 425.305 425.305" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                  <linearGradient id="half-bg-07-{{ block.id }}" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="50%" style="stop-color:{{ section.settings.star_bg_color }};stop-opacity:1" />
+                                    <stop offset="50%" style="stop-color:{{ section.settings.star_empty_color }};stop-opacity:1" />
+                                  </linearGradient>
+                                </defs>
+                                <g><g><g><path style="fill:url(#half-bg-07-{{ block.id }});" d="M47.781,0v329.743h103.74l61.132,95.562l61.142-95.562h103.73V0H47.781z"></path><path style="fill:currentColor;" d="M267.16,179.732 l12.858,75.045l-67.375-35.427l-67.385,35.427l12.867-75.045l-54.518-53.14l75.338-10.952l33.697-68.274l33.688,68.274 l75.338,10.952L267.16,179.732z"></path></g></g></g>
+                              </svg>
+                            </span>
+                          {% when 'star3' %}
+                            <span class="star star-half">
+                              <svg width="1em" height="1em" viewBox="0 0 1200 1200" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                  <linearGradient id="half-bg-07-{{ block.id }}" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="50%" style="stop-color:{{ section.settings.star_bg_color }};stop-opacity:1" />
+                                    <stop offset="50%" style="stop-color:{{ section.settings.star_empty_color }};stop-opacity:1" />
+                                  </linearGradient>
+                                </defs>
+                                <circle cx="600" cy="600" r="600" fill="url(#half-bg-07-{{ block.id }})"/>
+                                <path d="M603.955,209.912l94.556,295.239l309.889,6.958L756.812,693.164l89.136,296.924 L595.972,806.763L341.162,983.35l97.119-294.434l-246.68-187.793l310.034,1.392L603.955,209.912L603.955,209.912z" fill="currentColor"></path>
+                              </svg>
+                            </span>
+                          {% else %}
+                            <span class="star star-half" style="background: linear-gradient(to right, {{ section.settings.star_bg_color }} 50%, {{ section.settings.star_empty_color }} 50%); color: {{ section.settings.star_color }};">★</span>
+                        {% endcase %}
+                      {% endif %}
+                      
+                      {% for i in (1..empty_stars) %}
+                        {% case section.settings.star_icon %}
+                          {% when 'star1' %}
+                            <span class="star star-empty">
+                              <svg viewBox="-2.4 -2.4 28.80 28.80" xmlns="http://www.w3.org/2000/svg" fill="{{ section.settings.star_empty_color }}" width="1em" height="1em"><g stroke-width="0" transform="translate(1.2,1.2), scale(0.9)"><rect x="-2.4" y="-2.4" width="28.80" height="28.80" rx="2.88" fill="{{ section.settings.star_bg_color }}"></rect></g><g> <rect x="0" fill="none" width="24" height="24"></rect> <g> <path d="M12 2l2.582 6.953L22 9.257l-5.822 4.602L18.18 21 12 16.89 5.82 21l2.002-7.14L2 9.256l7.418-.304"></path> </g> </g></svg>
+                            </span>
+                          {% when 'star2' %}
+                            <span class="star star-empty">
+                              <svg width="1em" height="1em" viewBox="0 0 425.305 425.305" fill="{{ section.settings.star_empty_color }}" xmlns="http://www.w3.org/2000/svg"><g><g><g><path style="fill:{{ section.settings.star_bg_color }};" d="M47.781,0v329.743h103.74l61.132,95.562l61.142-95.562h103.73V0H47.781z"></path><path style="fill:{{ section.settings.star_empty_color }};" d="M267.16,179.732 l12.858,75.045l-67.375-35.427l-67.385,35.427l12.867-75.045l-54.518-53.14l75.338-10.952l33.697-68.274l33.688,68.274 l75.338,10.952L267.16,179.732z"></path></g></g></g></svg>
+                            </span>
+                          {% when 'star3' %}
+                            <span class="star star-empty">
+                              <svg width="1em" height="1em" viewBox="0 0 1200 1200" fill="{{ section.settings.star_empty_color }}" xmlns="http://www.w3.org/2000/svg"><circle cx="600" cy="600" r="600" fill="{{ section.settings.star_bg_color }}"/><path d="M603.955,209.912l94.556,295.239l309.889,6.958L756.812,693.164l89.136,296.924 L595.972,806.763L341.162,983.35l97.119-294.434l-246.68-187.793l310.034,1.392L603.955,209.912L603.955,209.912z" fill="{{ section.settings.star_empty_color }}"></path></svg>
+                            </span>
+                          {% else %}
+                            <span class="star star-empty" style="color: {{ section.settings.star_empty_color }};">★</span>
+                        {% endcase %}
+                      {% endfor %}
+                    </div>
+                  {%- endif -%}
+
+                  {%- if block.settings.testimonial_title != blank -%}
+                    <h3 class="vso-testimonials-07__testimonial-title">{{ block.settings.testimonial_title }}</h3>
+                  {%- endif -%}
+
+                  {%- if block.settings.testimonial_text != blank -%}
+                    <div class="vso-testimonials-07__testimonial-text">{{ block.settings.testimonial_text }}</div>
+                  {%- endif -%}
+
+                  <div class="vso-testimonials-07__author">
+                    <div class="vso-testimonials-07__author-avatar">
+                      {%- if block.settings.author_image != blank -%}
+                        <img src="{{ block.settings.author_image | image_url: width: section.settings.avatar_size_desktop, height: section.settings.avatar_size_desktop }}" alt="{{ block.settings.author_name | escape }}" loading="lazy" width="{{ section.settings.avatar_size_desktop }}" height="{{ section.settings.avatar_size_desktop }}">
+                      {%- else -%}
+                        {% assign first_initial = block.settings.author_name | slice: 0, 1 | upcase %}
+                        {{ first_initial }}
+                      {%- endif -%}
+                    </div>
+
+                    <div class="vso-testimonials-07__author-info">
+                      {%- if block.settings.author_name != blank -%}
+                        <div class="vso-testimonials-07__author-name">{{ block.settings.author_name }}</div>
+                      {%- endif -%}
+                      {%- if block.settings.author_location != blank -%}
+                        <div class="vso-testimonials-07__author-location">{{ block.settings.author_location }}</div>
+                      {%- endif -%}
+                    </div>
+                  </div>
+
+                  {%- if block.settings.testimonial_date != blank -%}
+                    <div class="vso-testimonials-07__author-date">{{ block.settings.testimonial_date }}</div>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+
+              {%- for block in section.blocks -%}
+              {%- if block.type == 'testimonial' -%}
+                <div class="vso-testimonials-07__testimonial-card">
+                  {%- if block.settings.show_stars -%}
+                    <div class="vso-testimonials-07__stars">
+                      {%- liquid
+                        assign rating = block.settings.star_rating
+                        assign full_stars = rating | floor
+                        assign half_star = rating | modulo: 1
+                        assign empty_stars = 5 | minus: full_stars
+                        if half_star >= 0.5
+                          assign empty_stars = empty_stars | minus: 1
+                        endif
+                      -%}
+                      
+                      {% for i in (1..full_stars) %}
+                        {% case section.settings.star_icon %}
+                          {% when 'star1' %}
+                            <span class="star star-filled">
+                              <svg viewBox="-2.4 -2.4 28.80 28.80" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="1em" height="1em"><g stroke-width="0" transform="translate(1.2,1.2), scale(0.9)"><rect x="-2.4" y="-2.4" width="28.80" height="28.80" rx="2.88" fill="{{ section.settings.star_bg_color }}"></rect></g><g> <rect x="0" fill="none" width="24" height="24"></rect> <g> <path d="M12 2l2.582 6.953L22 9.257l-5.822 4.602L18.18 21 12 16.89 5.82 21l2.002-7.14L2 9.256l7.418-.304"></path> </g> </g></svg>
+                            </span>
+                          {% when 'star2' %}
+                            <span class="star star-filled">
+                              <svg width="1em" height="1em" viewBox="0 0 425.305 425.305" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><g><g><g><path style="fill:{{ section.settings.star_bg_color }};" d="M47.781,0v329.743h103.74l61.132,95.562l61.142-95.562h103.73V0H47.781z"></path><path style="fill:currentColor;" d="M267.16,179.732 l12.858,75.045l-67.375-35.427l-67.385,35.427l12.867-75.045l-54.518-53.14l75.338-10.952l33.697-68.274l33.688,68.274 l75.338,10.952L267.16,179.732z"></path></g></g></g></svg>
+                            </span>
+                          {% when 'star3' %}
+                            <span class="star star-filled">
+                              <svg width="1em" height="1em" viewBox="0 0 1200 1200" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><circle cx="600" cy="600" r="600" fill="{{ section.settings.star_bg_color }}"/><path d="M603.955,209.912l94.556,295.239l309.889,6.958L756.812,693.164l89.136,296.924 L595.972,806.763L341.162,983.35l97.119-294.434l-246.68-187.793l310.034,1.392L603.955,209.912L603.955,209.912z" fill="currentColor"></path></svg>
+                            </span>
+                          {% else %}
+                            <span class="star star-filled">★</span>
+                        {% endcase %}
+                      {% endfor %}
+                      
+                      {% if half_star >= 0.5 %}
+                        {% case section.settings.star_icon %}
+                          {% when 'star1' %}
+                            <span class="star star-half">
+                              <svg viewBox="-2.4 -2.4 28.80 28.80" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em">
+                                <defs>
+                                  <linearGradient id="half-bg-07-{{ block.id }}" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="50%" style="stop-color:{{ section.settings.star_bg_color }};stop-opacity:1" />
+                                    <stop offset="50%" style="stop-color:{{ section.settings.star_empty_color }};stop-opacity:1" />
+                                  </linearGradient>
+                                </defs>
+                                <g stroke-width="0" transform="translate(1.2,1.2), scale(0.9)"><rect x="-2.4" y="-2.4" width="28.80" height="28.80" rx="2.88" fill="url(#half-bg-07-{{ block.id }})"></rect></g>
+                                <g> <rect x="0" fill="none" width="24" height="24"></rect> <g> <path d="M12 2l2.582 6.953L22 9.257l-5.822 4.602L18.18 21 12 16.89 5.82 21l2.002-7.14L2 9.256l7.418-.304" fill="currentColor"></path> </g> </g>
+                              </svg>
+                            </span>
+                          {% when 'star2' %}
+                            <span class="star star-half">
+                              <svg width="1em" height="1em" viewBox="0 0 425.305 425.305" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                  <linearGradient id="half-bg-07-{{ block.id }}" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="50%" style="stop-color:{{ section.settings.star_bg_color }};stop-opacity:1" />
+                                    <stop offset="50%" style="stop-color:{{ section.settings.star_empty_color }};stop-opacity:1" />
+                                  </linearGradient>
+                                </defs>
+                                <g><g><g><path style="fill:url(#half-bg-07-{{ block.id }});" d="M47.781,0v329.743h103.74l61.132,95.562l61.142-95.562h103.73V0H47.781z"></path><path style="fill:currentColor;" d="M267.16,179.732 l12.858,75.045l-67.375-35.427l-67.385,35.427l12.867-75.045l-54.518-53.14l75.338-10.952l33.697-68.274l33.688,68.274 l75.338,10.952L267.16,179.732z"></path></g></g></g>
+                              </svg>
+                            </span>
+                          {% when 'star3' %}
+                            <span class="star star-half">
+                              <svg width="1em" height="1em" viewBox="0 0 1200 1200" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                  <linearGradient id="half-bg-07-{{ block.id }}" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="50%" style="stop-color:{{ section.settings.star_bg_color }};stop-opacity:1" />
+                                    <stop offset="50%" style="stop-color:{{ section.settings.star_empty_color }};stop-opacity:1" />
+                                  </linearGradient>
+                                </defs>
+                                <circle cx="600" cy="600" r="600" fill="url(#half-bg-07-{{ block.id }})"/>
+                                <path d="M603.955,209.912l94.556,295.239l309.889,6.958L756.812,693.164l89.136,296.924 L595.972,806.763L341.162,983.35l97.119-294.434l-246.68-187.793l310.034,1.392L603.955,209.912L603.955,209.912z" fill="currentColor"></path>
+                              </svg>
+                            </span>
+                          {% else %}
+                            <span class="star star-half" style="background: linear-gradient(to right, {{ section.settings.star_bg_color }} 50%, {{ section.settings.star_empty_color }} 50%); color: {{ section.settings.star_color }};">★</span>
+                        {% endcase %}
+                      {% endif %}
+                      
+                      {% for i in (1..empty_stars) %}
+                        {% case section.settings.star_icon %}
+                          {% when 'star1' %}
+                            <span class="star star-empty">
+                              <svg viewBox="-2.4 -2.4 28.80 28.80" xmlns="http://www.w3.org/2000/svg" fill="{{ section.settings.star_empty_color }}" width="1em" height="1em"><g stroke-width="0" transform="translate(1.2,1.2), scale(0.9)"><rect x="-2.4" y="-2.4" width="28.80" height="28.80" rx="2.88" fill="{{ section.settings.star_bg_color }}"></rect></g><g> <rect x="0" fill="none" width="24" height="24"></rect> <g> <path d="M12 2l2.582 6.953L22 9.257l-5.822 4.602L18.18 21 12 16.89 5.82 21l2.002-7.14L2 9.256l7.418-.304"></path> </g> </g></svg>
+                            </span>
+                          {% when 'star2' %}
+                            <span class="star star-empty">
+                              <svg width="1em" height="1em" viewBox="0 0 425.305 425.305" fill="{{ section.settings.star_empty_color }}" xmlns="http://www.w3.org/2000/svg"><g><g><g><path style="fill:{{ section.settings.star_bg_color }};" d="M47.781,0v329.743h103.74l61.132,95.562l61.142-95.562h103.73V0H47.781z"></path><path style="fill:{{ section.settings.star_empty_color }};" d="M267.16,179.732 l12.858,75.045l-67.375-35.427l-67.385,35.427l12.867-75.045l-54.518-53.14l75.338-10.952l33.697-68.274l33.688,68.274 l75.338,10.952L267.16,179.732z"></path></g></g></g></svg>
+                            </span>
+                          {% when 'star3' %}
+                            <span class="star star-empty">
+                              <svg width="1em" height="1em" viewBox="0 0 1200 1200" fill="{{ section.settings.star_empty_color }}" xmlns="http://www.w3.org/2000/svg"><circle cx="600" cy="600" r="600" fill="{{ section.settings.star_bg_color }}"/><path d="M603.955,209.912l94.556,295.239l309.889,6.958L756.812,693.164l89.136,296.924 L595.972,806.763L341.162,983.35l97.119-294.434l-246.68-187.793l310.034,1.392L603.955,209.912L603.955,209.912z" fill="{{ section.settings.star_empty_color }}"></path></svg>
+                            </span>
+                          {% else %}
+                            <span class="star star-empty" style="color: {{ section.settings.star_empty_color }};">★</span>
+                        {% endcase %}
+                      {% endfor %}
+                    </div>
+                  {%- endif -%}
+
+                  {%- if block.settings.testimonial_title != blank -%}
+                    <h3 class="vso-testimonials-07__testimonial-title">{{ block.settings.testimonial_title }}</h3>
+                  {%- endif -%}
+
+                  {%- if block.settings.testimonial_text != blank -%}
+                    <div class="vso-testimonials-07__testimonial-text">{{ block.settings.testimonial_text }}</div>
+                  {%- endif -%}
+
+                  <div class="vso-testimonials-07__author">
+                    <div class="vso-testimonials-07__author-avatar">
+                      {%- if block.settings.author_image != blank -%}
+                        <img src="{{ block.settings.author_image | image_url: width: section.settings.avatar_size_desktop, height: section.settings.avatar_size_desktop }}" alt="{{ block.settings.author_name | escape }}" loading="lazy" width="{{ section.settings.avatar_size_desktop }}" height="{{ section.settings.avatar_size_desktop }}">
+                      {%- else -%}
+                        {% assign first_initial = block.settings.author_name | slice: 0, 1 | upcase %}
+                        {{ first_initial }}
+                      {%- endif -%}
+                    </div>
+
+                    <div class="vso-testimonials-07__author-info">
+                      {%- if block.settings.author_name != blank -%}
+                        <div class="vso-testimonials-07__author-name">{{ block.settings.author_name }}</div>
+                      {%- endif -%}
+                      {%- if block.settings.author_location != blank -%}
+                        <div class="vso-testimonials-07__author-location">{{ block.settings.author_location }}</div>
+                      {%- endif -%}
+                    </div>
+                  </div>
+
+                  {%- if block.settings.testimonial_date != blank -%}
+                    <div class="vso-testimonials-07__author-date">{{ block.settings.testimonial_date }}</div>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </div>
+      </div>
+    {%- else -%}
+      <div class="vso-testimonials-07__header">
+        {%- if section.settings.subtitle != blank -%}
+          <div class="vso-testimonials-07__subtitle">
+            {%- if section.settings.show_subtitle_dot -%}
+              <span class="vso-testimonials-07__subtitle-dot"></span>
+            {%- endif -%}
+            {{ section.settings.subtitle }}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.title != blank -%}
+          <h2 class="vso-testimonials-07__title">{{ section.settings.title }}</h2>
+        {%- endif -%}
+
+        {%- if section.settings.description != blank -%}
+          <div class="vso-testimonials-07__description">{{ section.settings.description }}</div>
+        {%- endif -%}
+
+        {%- if section.settings.show_stats -%}
+          <div class="vso-testimonials-07__stats">
+            {%- if section.settings.stat_1_number != blank -%}
+              <div class="vso-testimonials-07__stat">
+                <div class="vso-testimonials-07__stat-number">{{ section.settings.stat_1_number }}</div>
+                <div class="vso-testimonials-07__stat-label">{{ section.settings.stat_1_label }}</div>
+              </div>
+            {%- endif -%}
+
+            {%- if section.settings.stat_2_number != blank -%}
+              <div class="vso-testimonials-07__stat">
+                <div class="vso-testimonials-07__stat-number">{{ section.settings.stat_2_number }}</div>
+                <div class="vso-testimonials-07__stat-label">{{ section.settings.stat_2_label }}</div>
+              </div>
+            {%- endif -%}
+
+            {%- if section.settings.stat_3_number != blank -%}
+              <div class="vso-testimonials-07__stat">
+                <div class="vso-testimonials-07__stat-number">{{ section.settings.stat_3_number }}</div>
+                <div class="vso-testimonials-07__stat-label">{{ section.settings.stat_3_label }}</div>
+              </div>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="vso-testimonials-07__testimonials-wrapper">
+        <div class="vso-testimonials-07__scroll-container">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'testimonial' -%}
+              <div class="vso-testimonials-07__testimonial-card">
+                {%- if block.settings.show_stars -%}
+                  <div class="vso-testimonials-07__stars">
+                    {%- liquid
+                      assign rating = block.settings.star_rating
+                      assign full_stars = rating | floor
+                      assign half_star = rating | modulo: 1
+                      assign empty_stars = 5 | minus: full_stars
+                      if half_star >= 0.5
+                        assign empty_stars = empty_stars | minus: 1
+                      endif
+                    -%}
+                    
+                    {% for i in (1..full_stars) %}
+                      {% case section.settings.star_icon %}
+                        {% when 'star1' %}
+                          <span class="star star-filled">
+                            <svg viewBox="-2.4 -2.4 28.80 28.80" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="1em" height="1em"><g stroke-width="0" transform="translate(1.2,1.2), scale(0.9)"><rect x="-2.4" y="-2.4" width="28.80" height="28.80" rx="2.88" fill="{{ section.settings.star_bg_color }}"></rect></g><g> <rect x="0" fill="none" width="24" height="24"></rect> <g> <path d="M12 2l2.582 6.953L22 9.257l-5.822 4.602L18.18 21 12 16.89 5.82 21l2.002-7.14L2 9.256l7.418-.304"></path> </g> </g></svg>
+                          </span>
+                        {% when 'star2' %}
+                          <span class="star star-filled">
+                            <svg width="1em" height="1em" viewBox="0 0 425.305 425.305" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><g><g><g><path style="fill:{{ section.settings.star_bg_color }};" d="M47.781,0v329.743h103.74l61.132,95.562l61.142-95.562h103.73V0H47.781z"></path><path style="fill:currentColor;" d="M267.16,179.732 l12.858,75.045l-67.375-35.427l-67.385,35.427l12.867-75.045l-54.518-53.14l75.338-10.952l33.697-68.274l33.688,68.274 l75.338,10.952L267.16,179.732z"></path></g></g></g></svg>
+                          </span>
+                        {% when 'star3' %}
+                          <span class="star star-filled">
+                            <svg width="1em" height="1em" viewBox="0 0 1200 1200" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><circle cx="600" cy="600" r="600" fill="{{ section.settings.star_bg_color }}"/><path d="M603.955,209.912l94.556,295.239l309.889,6.958L756.812,693.164l89.136,296.924 L595.972,806.763L341.162,983.35l97.119-294.434l-246.68-187.793l310.034,1.392L603.955,209.912L603.955,209.912z" fill="currentColor"></path></svg>
+                          </span>
+                        {% else %}
+                          <span class="star star-filled">★</span>
+                      {% endcase %}
+                    {% endfor %}
+                    
+                    {% if half_star >= 0.5 %}
+                      {% case section.settings.star_icon %}
+                        {% when 'star1' %}
+                          <span class="star star-half">
+                            <svg viewBox="-2.4 -2.4 28.80 28.80" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em">
+                              <defs>
+                                <linearGradient id="half-bg-07-{{ block.id }}" x1="0%" y1="0%" x2="100%" y2="0%">
+                                  <stop offset="50%" style="stop-color:{{ section.settings.star_bg_color }};stop-opacity:1" />
+                                  <stop offset="50%" style="stop-color:{{ section.settings.star_empty_color }};stop-opacity:1" />
+                                </linearGradient>
+                              </defs>
+                              <g stroke-width="0" transform="translate(1.2,1.2), scale(0.9)"><rect x="-2.4" y="-2.4" width="28.80" height="28.80" rx="2.88" fill="url(#half-bg-07-{{ block.id }})"></rect></g>
+                              <g> <rect x="0" fill="none" width="24" height="24"></rect> <g> <path d="M12 2l2.582 6.953L22 9.257l-5.822 4.602L18.18 21 12 16.89 5.82 21l2.002-7.14L2 9.256l7.418-.304" fill="currentColor"></path> </g> </g>
+                            </svg>
+                          </span>
+                        {% when 'star2' %}
+                          <span class="star star-half">
+                            <svg width="1em" height="1em" viewBox="0 0 425.305 425.305" xmlns="http://www.w3.org/2000/svg">
+                              <defs>
+                                <linearGradient id="half-bg-07-{{ block.id }}" x1="0%" y1="0%" x2="100%" y2="0%">
+                                  <stop offset="50%" style="stop-color:{{ section.settings.star_bg_color }};stop-opacity:1" />
+                                  <stop offset="50%" style="stop-color:{{ section.settings.star_empty_color }};stop-opacity:1" />
+                                </linearGradient>
+                              </defs>
+                              <g><g><g><path style="fill:url(#half-bg-07-{{ block.id }});" d="M47.781,0v329.743h103.74l61.132,95.562l61.142-95.562h103.73V0H47.781z"></path><path style="fill:currentColor;" d="M267.16,179.732 l12.858,75.045l-67.375-35.427l-67.385,35.427l12.867-75.045l-54.518-53.14l75.338-10.952l33.697-68.274l33.688,68.274 l75.338,10.952L267.16,179.732z"></path></g></g></g>
+                            </svg>
+                          </span>
+                        {% when 'star3' %}
+                          <span class="star star-half">
+                            <svg width="1em" height="1em" viewBox="0 0 1200 1200" xmlns="http://www.w3.org/2000/svg">
+                              <defs>
+                                <linearGradient id="half-bg-07-{{ block.id }}" x1="0%" y1="0%" x2="100%" y2="0%">
+                                  <stop offset="50%" style="stop-color:{{ section.settings.star_bg_color }};stop-opacity:1" />
+                                  <stop offset="50%" style="stop-color:{{ section.settings.star_empty_color }};stop-opacity:1" />
+                                </linearGradient>
+                              </defs>
+                              <circle cx="600" cy="600" r="600" fill="url(#half-bg-07-{{ block.id }})"/>
+                              <path d="M603.955,209.912l94.556,295.239l309.889,6.958L756.812,693.164l89.136,296.924 L595.972,806.763L341.162,983.35l97.119-294.434l-246.68-187.793l310.034,1.392L603.955,209.912L603.955,209.912z" fill="currentColor"></path>
+                            </svg>
+                          </span>
+                        {% else %}
+                          <span class="star star-half" style="background: linear-gradient(to right, {{ section.settings.star_bg_color }} 50%, {{ section.settings.star_empty_color }} 50%); color: {{ section.settings.star_color }};">★</span>
+                      {% endcase %}
+                    {% endif %}
+                    
+                    {% for i in (1..empty_stars) %}
+                      {% case section.settings.star_icon %}
+                        {% when 'star1' %}
+                          <span class="star star-empty">
+                            <svg viewBox="-2.4 -2.4 28.80 28.80" xmlns="http://www.w3.org/2000/svg" fill="{{ section.settings.star_empty_color }}" width="1em" height="1em"><g stroke-width="0" transform="translate(1.2,1.2), scale(0.9)"><rect x="-2.4" y="-2.4" width="28.80" height="28.80" rx="2.88" fill="{{ section.settings.star_bg_color }}"></rect></g><g> <rect x="0" fill="none" width="24" height="24"></rect> <g> <path d="M12 2l2.582 6.953L22 9.257l-5.822 4.602L18.18 21 12 16.89 5.82 21l2.002-7.14L2 9.256l7.418-.304"></path> </g> </g></svg>
+                          </span>
+                        {% when 'star2' %}
+                          <span class="star star-empty">
+                            <svg width="1em" height="1em" viewBox="0 0 425.305 425.305" fill="{{ section.settings.star_empty_color }}" xmlns="http://www.w3.org/2000/svg"><g><g><g><path style="fill:{{ section.settings.star_bg_color }};" d="M47.781,0v329.743h103.74l61.132,95.562l61.142-95.562h103.73V0H47.781z"></path><path style="fill:{{ section.settings.star_empty_color }};" d="M267.16,179.732 l12.858,75.045l-67.375-35.427l-67.385,35.427l12.867-75.045l-54.518-53.14l75.338-10.952l33.697-68.274l33.688,68.274 l75.338,10.952L267.16,179.732z"></path></g></g></g></svg>
+                          </span>
+                        {% when 'star3' %}
+                          <span class="star star-empty">
+                            <svg width="1em" height="1em" viewBox="0 0 1200 1200" fill="{{ section.settings.star_empty_color }}" xmlns="http://www.w3.org/2000/svg"><circle cx="600" cy="600" r="600" fill="{{ section.settings.star_bg_color }}"/><path d="M603.955,209.912l94.556,295.239l309.889,6.958L756.812,693.164l89.136,296.924 L595.972,806.763L341.162,983.35l97.119-294.434l-246.68-187.793l310.034,1.392L603.955,209.912L603.955,209.912z" fill="{{ section.settings.star_empty_color }}"></path></svg>
+                          </span>
+                        {% else %}
+                          <span class="star star-empty" style="color: {{ section.settings.star_empty_color }};">★</span>
+                      {% endcase %}
+                    {% endfor %}
+                  </div>
+                {%- endif -%}
+
+                {%- if block.settings.testimonial_title != blank -%}
+                  <h3 class="vso-testimonials-07__testimonial-title">{{ block.settings.testimonial_title }}</h3>
+                {%- endif -%}
+
+                {%- if block.settings.testimonial_text != blank -%}
+                  <div class="vso-testimonials-07__testimonial-text">{{ block.settings.testimonial_text }}</div>
+                {%- endif -%}
+
+                <div class="vso-testimonials-07__author">
+                  <div class="vso-testimonials-07__author-avatar">
+                    {%- if block.settings.author_image != blank -%}
+                      <img src="{{ block.settings.author_image | image_url: width: section.settings.avatar_size_desktop, height: section.settings.avatar_size_desktop }}" alt="{{ block.settings.author_name | escape }}" loading="lazy" width="{{ section.settings.avatar_size_desktop }}" height="{{ section.settings.avatar_size_desktop }}">
+                    {%- else -%}
+                      {% assign first_initial = block.settings.author_name | slice: 0, 1 | upcase %}
+                      {{ first_initial }}
+                    {%- endif -%}
+                  </div>
+
+                  <div class="vso-testimonials-07__author-info">
+                    {%- if block.settings.author_name != blank -%}
+                      <div class="vso-testimonials-07__author-name">{{ block.settings.author_name }}</div>
+                    {%- endif -%}
+                    {%- if block.settings.author_location != blank -%}
+                      <div class="vso-testimonials-07__author-location">{{ block.settings.author_location }}</div>
+                    {%- endif -%}
+                  </div>
+                </div>
+
+                {%- if block.settings.testimonial_date != blank -%}
+                  <div class="vso-testimonials-07__author-date">{{ block.settings.testimonial_date }}</div>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'testimonial' -%}
+              <div class="vso-testimonials-07__testimonial-card">
+                {%- if block.settings.show_stars -%}
+                  <div class="vso-testimonials-07__stars">
+                    {%- liquid
+                      assign rating = block.settings.star_rating
+                      assign full_stars = rating | floor
+                      assign half_star = rating | modulo: 1
+                      assign empty_stars = 5 | minus: full_stars
+                      if half_star >= 0.5
+                        assign empty_stars = empty_stars | minus: 1
+                      endif
+                    -%}
+                    
+                    {% for i in (1..full_stars) %}
+                      {% case section.settings.star_icon %}
+                        {% when 'star1' %}
+                          <span class="star star-filled"> 
+                            <svg viewBox="-2.4 -2.4 28.80 28.80" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="1em" height="1em"><g stroke-width="0" transform="translate(1.2,1.2), scale(0.9)"><rect x="-2.4" y="-2.4" width="28.80" height="28.80" rx="2.88" fill="{{ section.settings.star_bg_color }}"></rect></g><g> <rect x="0" fill="none" width="24" height="24"></rect> <g> <path d="M12 2l2.582 6.953L22 9.257l-5.822 4.602L18.18 21 12 16.89 5.82 21l2.002-7.14L2 9.256l7.418-.304"></path> </g> </g></svg>
+                          </span>
+                        {% when 'star2' %}
+                          <span class="star star-filled">
+                            <svg width="1em" height="1em" viewBox="0 0 425.305 425.305" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><g><g><g><path style="fill:{{ section.settings.star_bg_color }};" d="M47.781,0v329.743h103.74l61.132,95.562l61.142-95.562h103.73V0H47.781z"></path><path style="fill:currentColor;" d="M267.16,179.732 l12.858,75.045l-67.375-35.427l-67.385,35.427l12.867-75.045l-54.518-53.14l75.338-10.952l33.697-68.274l33.688,68.274 l75.338,10.952L267.16,179.732z"></path></g></g></g></svg>
+                          </span>
+                        {% when 'star3' %}
+                          <span class="star star-filled">
+                            <svg width="1em" height="1em" viewBox="0 0 1200 1200" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><circle cx="600" cy="600" r="600" fill="{{ section.settings.star_bg_color }}"/><path d="M603.955,209.912l94.556,295.239l309.889,6.958L756.812,693.164l89.136,296.924 L595.972,806.763L341.162,983.35l97.119-294.434l-246.68-187.793l310.034,1.392L603.955,209.912L603.955,209.912z" fill="currentColor"></path></svg>
+                          </span>
+                        {% else %}
+                          <span class="star star-filled">★</span>
+                      {% endcase %}
+                    {% endfor %}
+                    
+                    {% if half_star >= 0.5 %}
+                      {% case section.settings.star_icon %}
+                        {% when 'star1' %}
+                          <span class="star star-half">
+                            <svg viewBox="-2.4 -2.4 28.80 28.80" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em">
+                              <defs>
+                                <linearGradient id="half-bg-07-{{ block.id }}" x1="0%" y1="0%" x2="100%" y2="0%">
+                                  <stop offset="50%" style="stop-color:{{ section.settings.star_bg_color }};stop-opacity:1" />
+                                  <stop offset="50%" style="stop-color:{{ section.settings.star_empty_color }};stop-opacity:1" />
+                                </linearGradient>
+                              </defs>
+                              <g stroke-width="0" transform="translate(1.2,1.2), scale(0.9)"><rect x="-2.4" y="-2.4" width="28.80" height="28.80" rx="2.88" fill="url(#half-bg-07-{{ block.id }})"></rect></g>
+                              <g> <rect x="0" fill="none" width="24" height="24"></rect> <g> <path d="M12 2l2.582 6.953L22 9.257l-5.822 4.602L18.18 21 12 16.89 5.82 21l2.002-7.14L2 9.256l7.418-.304" fill="currentColor"></path> </g> </g>
+                            </svg>
+                          </span>
+                        {% when 'star2' %}
+                          <span class="star star-half">
+                            <svg width="1em" height="1em" viewBox="0 0 425.305 425.305" xmlns="http://www.w3.org/2000/svg">
+                              <defs>
+                                <linearGradient id="half-bg-07-{{ block.id }}" x1="0%" y1="0%" x2="100%" y2="0%">
+                                  <stop offset="50%" style="stop-color:{{ section.settings.star_bg_color }};stop-opacity:1" />
+                                  <stop offset="50%" style="stop-color:{{ section.settings.star_empty_color }};stop-opacity:1" />
+                                </linearGradient>
+                              </defs>
+                              <g><g><g><path style="fill:url(#half-bg-07-{{ block.id }});" d="M47.781,0v329.743h103.74l61.132,95.562l61.142-95.562h103.73V0H47.781z"></path><path style="fill:currentColor;" d="M267.16,179.732 l12.858,75.045l-67.375-35.427l-67.385,35.427l12.867-75.045l-54.518-53.14l75.338-10.952l33.697-68.274l33.688,68.274 l75.338,10.952L267.16,179.732z"></path></g></g></g>
+                            </svg>
+                          </span>
+                        {% when 'star3' %}
+                          <span class="star star-half">
+                            <svg width="1em" height="1em" viewBox="0 0 1200 1200" xmlns="http://www.w3.org/2000/svg">
+                              <defs>
+                                <linearGradient id="half-bg-07-{{ block.id }}" x1="0%" y1="0%" x2="100%" y2="0%">
+                                  <stop offset="50%" style="stop-color:{{ section.settings.star_bg_color }};stop-opacity:1" />
+                                  <stop offset="50%" style="stop-color:{{ section.settings.star_empty_color }};stop-opacity:1" />
+                                </linearGradient>
+                              </defs>
+                              <circle cx="600" cy="600" r="600" fill="url(#half-bg-07-{{ block.id }})"/>
+                              <path d="M603.955,209.912l94.556,295.239l309.889,6.958L756.812,693.164l89.136,296.924 L595.972,806.763L341.162,983.35l97.119-294.434l-246.68-187.793l310.034,1.392L603.955,209.912L603.955,209.912z" fill="currentColor"></path>
+                            </svg>
+                          </span>
+                        {% else %}
+                          <span class="star star-half" style="background: linear-gradient(to right, {{ section.settings.star_bg_color }} 50%, {{ section.settings.star_empty_color }} 50%); color: {{ section.settings.star_color }};">★</span>
+                      {% endcase %}
+                    {% endif %}
+                    
+                    {% for i in (1..empty_stars) %}
+                      {% case section.settings.star_icon %}
+                        {% when 'star1' %}
+                          <span class="star star-empty">
+                            <svg viewBox="-2.4 -2.4 28.80 28.80" xmlns="http://www.w3.org/2000/svg" fill="{{ section.settings.star_empty_color }}" width="1em" height="1em"><g stroke-width="0" transform="translate(1.2,1.2), scale(0.9)"><rect x="-2.4" y="-2.4" width="28.80" height="28.80" rx="2.88" fill="{{ section.settings.star_bg_color }}"></rect></g><g> <rect x="0" fill="none" width="24" height="24"></rect> <g> <path d="M12 2l2.582 6.953L22 9.257l-5.822 4.602L18.18 21 12 16.89 5.82 21l2.002-7.14L2 9.256l7.418-.304"></path> </g> </g></svg>
+                          </span>
+                        {% when 'star2' %}
+                          <span class="star star-empty">
+                            <svg width="1em" height="1em" viewBox="0 0 425.305 425.305" fill="{{ section.settings.star_empty_color }}" xmlns="http://www.w3.org/2000/svg"><g><g><g><path style="fill:{{ section.settings.star_bg_color }};" d="M47.781,0v329.743h103.74l61.132,95.562l61.142-95.562h103.73V0H47.781z"></path><path style="fill:{{ section.settings.star_empty_color }};" d="M267.16,179.732 l12.858,75.045l-67.375-35.427l-67.385,35.427l12.867-75.045l-54.518-53.14l75.338-10.952l33.697-68.274l33.688,68.274 l75.338,10.952L267.16,179.732z"></path></g></g></g></svg>
+                          </span>
+                        {% when 'star3' %}
+                          <span class="star star-empty">
+                            <svg width="1em" height="1em" viewBox="0 0 1200 1200" fill="{{ section.settings.star_empty_color }}" xmlns="http://www.w3.org/2000/svg"><circle cx="600" cy="600" r="600" fill="{{ section.settings.star_bg_color }}"/><path d="M603.955,209.912l94.556,295.239l309.889,6.958L756.812,693.164l89.136,296.924 L595.972,806.763L341.162,983.35l97.119-294.434l-246.68-187.793l310.034,1.392L603.955,209.912L603.955,209.912z" fill="{{ section.settings.star_empty_color }}"></path></svg>
+                          </span>
+                        {% else %}
+                          <span class="star star-empty" style="color: {{ section.settings.star_empty_color }};">★</span>
+                      {% endcase %}
+                    {% endfor %}
+                  </div>
+                {%- endif -%}
+
+                {%- if block.settings.testimonial_title != blank -%}
+                  <h3 class="vso-testimonials-07__testimonial-title">{{ block.settings.testimonial_title }}</h3>
+                {%- endif -%}
+
+                {%- if block.settings.testimonial_text != blank -%}
+                  <div class="vso-testimonials-07__testimonial-text">{{ block.settings.testimonial_text }}</div>
+                {%- endif -%}
+
+                <div class="vso-testimonials-07__author">
+                  <div class="vso-testimonials-07__author-avatar">
+                    {%- if block.settings.author_image != blank -%}
+                      <img src="{{ block.settings.author_image | image_url: width: section.settings.avatar_size_desktop, height: section.settings.avatar_size_desktop }}" alt="{{ block.settings.author_name | escape }}" loading="lazy" width="{{ section.settings.avatar_size_desktop }}" height="{{ section.settings.avatar_size_desktop }}">
+                    {%- else -%}
+                      {% assign first_initial = block.settings.author_name | slice: 0, 1 | upcase %}
+                      {{ first_initial }}
+                    {%- endif -%}
+                  </div>
+
+                  <div class="vso-testimonials-07__author-info">
+                    {%- if block.settings.author_name != blank -%}
+                      <div class="vso-testimonials-07__author-name">{{ block.settings.author_name }}</div>
+                    {%- endif -%}
+                    {%- if block.settings.author_location != blank -%}
+                      <div class="vso-testimonials-07__author-location">{{ block.settings.author_location }}</div>
+                    {%- endif -%}
+                  </div>
+                </div>
+
+                {%- if block.settings.testimonial_date != blank -%}
+                  <div class="vso-testimonials-07__author-date">{{ block.settings.testimonial_date }}</div>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+<script>
+(function() {
+  function initInfiniteScroll() {
+    const scrollContainers = document.querySelectorAll('.vso-testimonials-07__scroll-container');
+
+    scrollContainers.forEach(function(container) {
+      if (window.innerWidth <= 768) {
+        // Get all cards in the container
+        const cards = container.querySelectorAll('.vso-testimonials-07__testimonial-card');
+        const totalCards = cards.length;
+
+        if (totalCards < 2) return; // Need at least 2 cards
+
+        const halfCards = Math.floor(totalCards / 2);
+
+        // Get the computed gap value once
+        const computedStyle = window.getComputedStyle(container);
+        const gap = parseFloat(computedStyle.gap) || 0;
+
+        // Calculate the exact position where the first duplicate card starts
+        // This is more accurate than manually calculating widths
+        let scrollWidth = 0;
+
+        // Method 1: Use getBoundingClientRect for precise positioning
+        const firstCardRect = cards[0].getBoundingClientRect();
+        const duplicateCardRect = cards[halfCards].getBoundingClientRect();
+        scrollWidth = duplicateCardRect.left - firstCardRect.left;
+
+        // Fallback method if cards are not visible
+        if (scrollWidth <= 0) {
+          for (let i = 0; i < halfCards; i++) {
+            const cardStyle = window.getComputedStyle(cards[i]);
+            const cardWidth = cards[i].offsetWidth +
+                            parseFloat(cardStyle.marginLeft || 0) +
+                            parseFloat(cardStyle.marginRight || 0);
+            scrollWidth += cardWidth;
+            // Add gap between cards
+            if (i < halfCards) {
+              scrollWidth += gap;
+            }
+          }
+        }
+
+        // Set CSS variables with precise width
+        container.style.setProperty('--scroll-width', scrollWidth + 'px');
+
+        // Calculate duration based on scroll width to maintain consistent speed
+        const baseSpeed = {{ scroll_speed_mobile }};
+        container.style.setProperty('--scroll-duration', baseSpeed + 's');
+
+        // Start the animation
+        requestAnimationFrame(function() {
+          container.classList.add('scrolling');
+        });
+      } else {
+        // Remove mobile-specific classes and properties on desktop
+        container.classList.remove('scrolling');
+        container.style.removeProperty('--scroll-width');
+        container.style.removeProperty('--scroll-duration');
+      }
+    });
+  }
+
+  // Initialize on page load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      setTimeout(initInfiniteScroll, 100);
+    });
+  } else {
+    setTimeout(initInfiniteScroll, 100);
+  }
+
+  // Reinitialize on window resize (debounced)
+  let resizeTimer;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function() {
+      const scrollContainers = document.querySelectorAll('.vso-testimonials-07__scroll-container');
+      scrollContainers.forEach(function(container) {
+        container.classList.remove('scrolling');
+        container.style.removeProperty('--scroll-width');
+        container.style.removeProperty('--scroll-duration');
+      });
+      setTimeout(initInfiniteScroll, 100);
+    }, 250);
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "VSO - Testimonials 07",
+  "tag": "section",
+  "class": "vso-testimonials-07",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout Options"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        {
+          "value": "stacked",
+          "label": "Text above cards"
+        },
+        {
+          "value": "horizontal",
+          "label": "Text beside cards"
+        }
+      ],
+      "default": "stacked"
+    },
+    {
+      "type": "checkbox",
+      "id": "section_full_width",
+      "label": "Full width section",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "section_max_width",
+      "min": 30,
+      "max": 300,
+      "step": 5,
+      "unit": "rem",
+      "label": "Section max width",
+      "default": 110
+    },
+    {
+      "type": "range",
+      "id": "text_container_max_width",
+      "min": 400,
+      "max": 800,
+      "step": 50,
+      "unit": "px",
+      "label": "Text container max width",
+      "default": 600
+    },
+    {
+      "type": "range",
+      "id": "content_testimonial_gap",
+      "min": 0,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "label": "Gap between text and testimonials",
+      "default": 80
+    },
+    {
+      "type": "header",
+      "content": "Scrolling Options"
+    },
+    {
+      "type": "range",
+      "id": "scroll_speed_desktop",
+      "min": 2,
+      "max": 100,
+      "step": 2,
+      "unit": "s",
+      "label": "Scroll speed desktop",
+      "default": 30,
+      "info": "Time for one complete scroll cycle on desktop"
+    },
+    {
+      "type": "range",
+      "id": "scroll_speed_mobile",
+      "min": 2,
+      "max": 100,
+      "step": 2,
+      "unit": "s",
+      "label": "Scroll speed mobile",
+      "default": 10,
+      "info": "Time for one complete scroll cycle on mobile"
+    },
+    {
+      "type": "range",
+      "id": "card_max_width",
+      "min": 200,
+      "max": 400,
+      "step": 20,
+      "unit": "px",
+      "label": "Desktop card max width",
+      "default": 320
+    },
+    {
+      "type": "range",
+      "id": "card_max_width_mobile",
+      "min": 100,
+      "max": 400,
+      "step": 10,
+      "unit": "px",
+      "label": "Mobile card max width",
+      "default": 280
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "min": 0,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "label": "Card gap",
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Section Content"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "CUSTOMER STORIES"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "title",
+      "label": "Title",
+      "default": "Thousands of <em>happy customers</em>"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>A collection of genuine reviews from customers who've experienced the transformative power of quality sleep.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Subtitle Styling"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Text color",
+      "default": "#8B5CF6"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_bg_color",
+      "label": "Background color",
+      "default": "#F3F4F6"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size_desktop",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size (desktop)",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size_mobile",
+      "min": 10,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size (mobile)",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "subtitle_font_weight",
+      "min": 300,
+      "max": 900,
+      "step": 100,
+      "label": "Font weight",
+      "default": 600
+    },
+    {
+      "type": "range",
+      "id": "subtitle_line_height",
+      "min": 100,
+      "max": 180,
+      "step": 10,
+      "unit": "%",
+      "label": "Line height",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "subtitle_padding_vertical",
+      "min": 4,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "label": "Vertical padding",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "subtitle_padding_horizontal",
+      "min": 8,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Horizontal padding",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "subtitle_border_radius",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Border radius",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "subtitle_margin_bottom",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Bottom margin",
+      "default": 16
+    },
+    {
+      "type": "checkbox",
+      "id": "show_subtitle_dot",
+      "label": "Show decorative dot",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "subtitle_dot_size",
+      "min": 4,
+      "max": 12,
+      "step": 1,
+      "unit": "px",
+      "label": "Dot size",
+      "default": 6
+    },
+    {
+      "type": "color",
+      "id": "subtitle_dot_color",
+      "label": "Dot color",
+      "default": "#8B5CF6"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_dot_spacing",
+      "min": 0,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "label": "Gap between dot and text",
+      "default": 8
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_subtitle_dot_pulse",
+      "label": "Enable pulsing animation",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Title Styling"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Text color",
+      "default": "#111827"
+    },
+    {
+      "type": "range",
+      "id": "title_size_desktop",
+      "min": 24,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Font size (desktop)",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "title_size_mobile",
+      "min": 20,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Font size (mobile)",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "title_font_weight",
+      "min": 300,
+      "max": 900,
+      "step": 100,
+      "label": "Font weight",
+      "default": 700
+    },
+    {
+      "type": "range",
+      "id": "title_line_height",
+      "min": 100,
+      "max": 150,
+      "step": 5,
+      "unit": "%",
+      "label": "Line height",
+      "default": 120
+    },
+    {
+      "type": "range",
+      "id": "title_margin_bottom",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Bottom margin",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Description Styling"
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Text color",
+      "default": "#6B7280"
+    },
+    {
+      "type": "range",
+      "id": "description_size_desktop",
+      "min": 14,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size (desktop)",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "description_size_mobile",
+      "min": 14,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size (mobile)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "description_font_weight",
+      "min": 300,
+      "max": 700,
+      "step": 100,
+      "label": "Font weight",
+      "default": 400
+    },
+    {
+      "type": "range",
+      "id": "description_line_height",
+      "min": 120,
+      "max": 180,
+      "step": 10,
+      "unit": "%",
+      "label": "Line height",
+      "default": 160
+    },
+    {
+      "type": "range",
+      "id": "description_margin_bottom",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom margin",
+      "default": 32
+    },
+    {
+      "type": "header",
+      "content": "Statistics Content"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_stats",
+      "label": "Show statistics",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "stat_1_number",
+      "label": "Statistic 1 - Number",
+      "default": "10,000+"
+    },
+    {
+      "type": "text",
+      "id": "stat_1_label",
+      "label": "Statistic 1 - Label",
+      "default": "Happy customers"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_number",
+      "label": "Statistic 2 - Number",
+      "default": "99%"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_label",
+      "label": "Statistic 2 - Label",
+      "default": "Satisfaction rate"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_number",
+      "label": "Statistic 3 - Number",
+      "default": "5-star"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_label",
+      "label": "Statistic 3 - Label",
+      "default": "Average rating"
+    },
+    {
+      "type": "header",
+      "content": "Statistics Styling"
+    },
+    {
+      "type": "select",
+      "id": "stats_alignment_desktop",
+      "label": "Desktop alignment",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "flex-end",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "stats_alignment_mobile",
+      "label": "Mobile alignment",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "flex-end",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "stat_numbers_alignment_desktop",
+      "label": "Numbers alignment (desktop)",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "stat_numbers_alignment_mobile",
+      "label": "Numbers alignment (mobile)",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "stats_gap",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "label": "Gap between statistics",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "stats_margin_top",
+      "min": 0,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "label": "Top margin",
+      "default": 32
+    },
+    {
+      "type": "color",
+      "id": "stat_number_color",
+      "label": "Number color",
+      "default": "#111827"
+    },
+    {
+      "type": "range",
+      "id": "stat_number_size_desktop",
+      "min": 20,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Number size (desktop)",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "stat_number_size_mobile",
+      "min": 18,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Number size (mobile)",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "stat_number_font_weight",
+      "min": 400,
+      "max": 900,
+      "step": 100,
+      "label": "Number font weight",
+      "default": 700
+    },
+    {
+      "type": "color",
+      "id": "stat_label_color",
+      "label": "Label color",
+      "default": "#6B7280"
+    },
+    {
+      "type": "range",
+      "id": "stat_label_size_desktop",
+      "min": 12,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Label size (desktop)",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "stat_label_size_mobile",
+      "min": 11,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "label": "Label size (mobile)",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "stat_label_font_weight",
+      "min": 300,
+      "max": 600,
+      "step": 100,
+      "label": "Label font weight",
+      "default": 400
+    },
+    {
+      "type": "color",
+      "id": "stat_divider_color",
+      "label": "Divider color",
+      "default": "#E5E7EB"
+    },
+    {
+      "type": "header",
+      "content": "Testimonial Card Design"
+    },
+    {
+      "type": "color",
+      "id": "testimonial_bg_color",
+      "label": "Background color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "testimonial_border_radius",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "label": "Border radius",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "testimonial_padding",
+      "min": 16,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding",
+      "default": 32
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_testimonial_shadow",
+      "label": "Enable shadow",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "testimonial_shadow_color",
+      "label": "Shadow color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "testimonial_border_width",
+      "min": 0,
+      "max": 3,
+      "step": 1,
+      "unit": "px",
+      "label": "Border width",
+      "default": 0
+    },
+    {
+      "type": "color",
+      "id": "testimonial_border_color",
+      "label": "Border color",
+      "default": "#E5E7EB"
+    },
+    {
+      "type": "header",
+      "content": "Star Rating Display"
+    },
+    {
+      "type": "range",
+      "id": "star_size_desktop",
+      "min": 16,
+      "max": 28,
+      "step": 2,
+      "unit": "px",
+      "label": "Star size (desktop)",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "star_size_mobile",
+      "min": 14,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "label": "Star size (mobile)",
+      "default": 22
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "star_gap",
+      "min": 0,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "label": "Star gap",
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "stars_margin_bottom",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "label": "Bottom margin",
+      "default": 10
+    },
+    {
+      "type": "select",
+      "id": "star_icon",
+      "label": "Star icon style",
+      "options": [
+        {
+          "value": "star1",
+          "label": "Star Style 1"
+        },
+        {
+          "value": "star2",
+          "label": "Star Style 2"
+        },
+        {
+          "value": "star3",
+          "label": "Star Style 3"
+        }
+      ],
+      "default": "star1"
+    },
+    {
+      "type": "color",
+      "id": "star_bg_color",
+      "label": "Star background color",
+      "default": "#8B5CF6"
+    },
+    {
+      "type": "color",
+      "id": "star_empty_color",
+      "label": "Empty star color",
+      "default": "#E5E7EB"
+    },
+    {
+      "type": "header",
+      "content": "Testimonial Title Styling"
+    },
+    {
+      "type": "color",
+      "id": "testimonial_title_color",
+      "label": "Text color",
+      "default": "#111827"
+    },
+    {
+      "type": "range",
+      "id": "testimonial_title_size_desktop",
+      "min": 14,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size (desktop)",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "testimonial_title_size_mobile",
+      "min": 14,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size (mobile)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "testimonial_title_font_weight",
+      "min": 400,
+      "max": 700,
+      "step": 100,
+      "label": "Font weight",
+      "default": 600
+    },
+    {
+      "type": "range",
+      "id": "testimonial_title_line_height",
+      "min": 110,
+      "max": 150,
+      "step": 10,
+      "unit": "%",
+      "label": "Line height",
+      "default": 130
+    },
+    {
+      "type": "range",
+      "id": "testimonial_title_margin_bottom",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "label": "Bottom margin",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Testimonial Content Styling"
+    },
+    {
+      "type": "color",
+      "id": "testimonial_content_color",
+      "label": "Text color",
+      "default": "#374151"
+    },
+    {
+      "type": "range",
+      "id": "testimonial_content_size_desktop",
+      "min": 14,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size (desktop)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "testimonial_content_size_mobile",
+      "min": 14,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Font size (mobile)",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "testimonial_content_font_weight",
+      "min": 300,
+      "max": 600,
+      "step": 100,
+      "label": "Font weight",
+      "default": 400
+    },
+    {
+      "type": "range",
+      "id": "testimonial_content_line_height",
+      "min": 130,
+      "max": 180,
+      "step": 10,
+      "unit": "%",
+      "label": "Line height",
+      "default": 160
+    },
+    {
+      "type": "range",
+      "id": "testimonial_content_margin_bottom",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Bottom margin",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Author Avatar & Typography"
+    },
+    {
+      "type": "range",
+      "id": "avatar_size_desktop",
+      "min": 32,
+      "max": 64,
+      "step": 4,
+      "unit": "px",
+      "label": "Avatar size (desktop)",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "avatar_size_mobile",
+      "min": 28,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "label": "Avatar size (mobile)",
+      "default": 40
+    },
+    {
+      "type": "color",
+      "id": "avatar_bg_color",
+      "label": "Avatar background color",
+      "default": "#8B5CF6"
+    },
+    {
+      "type": "color",
+      "id": "avatar_text_color",
+      "label": "Avatar text color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "avatar_text_size_desktop",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Avatar text size (desktop)",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "avatar_text_size_mobile",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Avatar text size (mobile)",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "author_gap",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap between avatar and text",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Author Name & Location Styling"
+    },
+    {
+      "type": "color",
+      "id": "author_name_color",
+      "label": "Name color",
+      "default": "#111827"
+    },
+    {
+      "type": "range",
+      "id": "author_name_size_desktop",
+      "min": 12,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Name size (desktop)",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "author_name_size_mobile",
+      "min": 12,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "label": "Name size (mobile)",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "author_name_font_weight",
+      "min": 400,
+      "max": 700,
+      "step": 100,
+      "label": "Name font weight",
+      "default": 600
+    },
+    {
+      "type": "color",
+      "id": "author_location_color",
+      "label": "Location color",
+      "default": "#6B7280"
+    },
+    {
+      "type": "range",
+      "id": "author_location_size_desktop",
+      "min": 11,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "label": "Location size (desktop)",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "author_location_size_mobile",
+      "min": 10,
+      "max": 14,
+      "step": 1,
+      "unit": "px",
+      "label": "Location size (mobile)",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "author_location_font_weight",
+      "min": 300,
+      "max": 600,
+      "step": 100,
+      "label": "Location font weight",
+      "default": 400
+    },
+    {
+      "type": "header",
+      "content": "Review Date Styling"
+    },
+    {
+      "type": "color",
+      "id": "author_date_color",
+      "label": "Date text color",
+      "default": "#9CA3AF"
+    },
+    {
+      "type": "range",
+      "id": "author_date_size_desktop",
+      "min": 10,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "label": "Date size (desktop)",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "author_date_size_mobile",
+      "min": 9,
+      "max": 14,
+      "step": 1,
+      "unit": "px",
+      "label": "Date size (mobile)",
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "author_date_font_weight",
+      "min": 300,
+      "max": 600,
+      "step": 100,
+      "label": "Date font weight",
+      "default": 400
+    },
+    {
+      "type": "header",
+      "content": "Review Date Badge Design"
+    },
+    {
+      "type": "color",
+      "id": "date_bg_color",
+      "label": "Badge background color",
+      "default": "#F9FAFB"
+    },
+    {
+      "type": "range",
+      "id": "date_padding_vertical",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "unit": "px",
+      "label": "Vertical padding",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "date_padding_horizontal",
+      "min": 4,
+      "max": 12,
+      "step": 1,
+      "unit": "px",
+      "label": "Horizontal padding",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "date_border_radius",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "unit": "px",
+      "label": "Border radius",
+      "default": 6
+    },
+    {
+      "type": "header",
+      "content": "Section Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 40,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "label": "Top padding (desktop)",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 40,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "label": "Bottom padding (desktop)",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 30,
+      "max": 80,
+      "step": 10,
+      "unit": "px",
+      "label": "Top padding (mobile)",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 30,
+      "max": 80,
+      "step": 10,
+      "unit": "px",
+      "label": "Bottom padding (mobile)",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal",
+      "min": 1,
+      "max": 3,
+      "step": 0.5,
+      "unit": "rem",
+      "label": "Horizontal padding (desktop)",
+      "default": 1.5
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal_mobile",
+      "min": 0.5,
+      "max": 3,
+      "step": 0.5,
+      "unit": "rem",
+      "label": "Horizontal padding (mobile)",
+      "default": 1
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Background Color",
+      "default": "#F9FAFB"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Testimonial Content"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_stars",
+          "label": "Show star rating",
+          "default": true
+        },
+        {
+          "type": "range",
+          "id": "star_rating",
+          "label": "Star rating",
+          "min": 0,
+          "max": 5,
+          "step": 0.5,
+          "default": 5
+        },
+        {
+          "type": "text",
+          "id": "testimonial_title",
+          "label": "Testimonial Title",
+          "default": "Super satisfied"
+        },
+        {
+          "type": "textarea",
+          "id": "testimonial_text",
+          "label": "Testimonial Text",
+          "default": "Super satisfied again! Versio does what it promises! I've been using it for months now and it's still as comfortable as day one."
+        },
+        {
+          "type": "text",
+          "id": "author_name",
+          "label": "Author Name",
+          "default": "Chloe"
+        },
+        {
+          "type": "image_picker",
+          "id": "author_image",
+          "label": "Author Image"
+        },
+        {
+          "type": "text",
+          "id": "author_location",
+          "label": "Author Location",
+          "default": "Los Angeles, CA"
+        },
+        {
+          "type": "text",
+          "id": "testimonial_date",
+          "label": "Testimonial Date",
+          "default": "2 days ago"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "twenzii - Testimonials 07",
+      "settings": {
+        "subtitle": "CUSTOMER STORIES",
+        "title": "Thousands of <em>happy customers</em>",
+        "description": "<p>A collection of genuine reviews from customers who've experienced the transformative power of quality sleep.</p>",
+        "show_stats": true,
+        "stat_1_number": "10,000+",
+        "stat_1_label": "Happy customers",
+        "stat_2_number": "99%",
+        "stat_2_label": "Satisfaction rate",
+        "stat_3_number": "5-star",
+        "stat_3_label": "Average rating"
+      },
+      "blocks": [
+        {
+          "type": "testimonial",
+          "settings": {
+            "show_stars": true,
+            "testimonial_title": "Super satisfied",
+            "testimonial_text": "Super satisfied again! Versio does what it promises! I've been using it for months now and it's still as comfortable as day one.",
+            "author_name": "Chloe",
+            "author_location": "Los Angeles, CA",
+            "testimonial_date": "2 days ago"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "show_stars": true,
+            "testimonial_title": "Amazing quality",
+            "testimonial_text": "The build quality exceeded my expectations. Every detail has been carefully crafted.",
+            "author_name": "Marcus",
+            "author_location": "New York, NY",
+            "testimonial_date": "1 week ago"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "show_stars": true,
+            "testimonial_title": "Perfect comfort",
+            "testimonial_text": "I've never experienced such comfort before. It's like sleeping on a cloud every night.",
+            "author_name": "Sarah",
+            "author_location": "Miami, FL",
+            "testimonial_date": "3 days ago"
+          },
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "show_stars": true,
+            "testimonial_title": "Super satisfied",
+            "testimonial_text": "Super satisfied again! Versio does what it promises! I've been using it for months now and it's still as comfortable as day one.",
+            "author_name": "Chloe",
+            "author_location": "Los Angeles, CA",
+            "testimonial_date": "2 days ago"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "show_stars": true,
+            "testimonial_title": "Amazing quality",
+            "testimonial_text": "The build quality exceeded my expectations. Every detail has been carefully crafted.",
+            "author_name": "Marcus",
+            "author_location": "New York, NY",
+            "testimonial_date": "1 week ago"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "show_stars": true,
+            "testimonial_title": "Perfect comfort",
+            "testimonial_text": "I've never experienced such comfort before. It's like sleeping on a cloud every night.",
+            "author_name": "Sarah",
+            "author_location": "Miami, FL",
+            "testimonial_date": "3 days ago"
+          },
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
